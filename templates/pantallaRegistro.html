@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>click10</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estilos.css') }}">
+    
+</head>
+<body>
+    <div class="container">
+        <div class="panelInicial">
+            <div class="imagenInicio">
+                <img src="{{ url_for('static', filename='img/nombreSistema.png') }}" width="210" height="70" alt="No se pudo cargar">
+                <br>
+                <img src="{{ url_for('static', filename='img/fotoInicio.png') }}" width="500" height="350" alt="No se pudo cargar">
+            </div>
+        
+            <div class="datosInicio">
+                <form>
+                    <div class="nombreCompleto">
+                        <div class="nombreApellido">
+                            <label>Nombre</label>
+                            <input type="text"placeholder="Ingrese su nombre" required>   
+                        </div>
+                        <div class="nombreApellido">
+                            <label>Apellido</label>
+                            <input type="text"placeholder="Ingrese su apellido" required> 
+                        </div>
+                    </div>
+
+                    <label>Nombre de usuario</label>
+                    <input type="text"placeholder="Ingrese su nombre de usuario" required>
+
+                    <label>Correo electrónico</label>
+                    <input type="email" placeholder="Ingrese su correo electrónico" required>
+                    
+                    <label>Contraseña</label>
+                    <input type="password" placeholder="Ingrese su contraseña" required>
+
+                    <label>Confirmar contraseña</label>
+                    <input type="password" placeholder="Ingrese su contraseña" required>
+                
+                    <input type="checkbox" required> Aceptar términos y condiciones<br>
+                    <a href="/Templates/pantallaPerfilUsuario.html">
+                    <input type="button" value="Registrarse" class="iniciarSesion"></a>
+
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+                    <div class=inicio>
+                        <p>¿Ya tienes una cuenta?
+                            <a href="/Templates/pantallaInicio.html">Inicia sesión aquí!</a>
+                        </p>
+                        
+                    </div>
+
+                </form>
+            </div>
+            
+        </div>
+    </div>
+       
+    
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+
+<body>
+    <header class="headerBlack">
+        <div class="headerLogo">
+            <img src="{{ url_for('static', filename='img/nombreSistema.png') }}" alt="No se pudo cargar" id="logo">
+        </div>
+        <div class="userHeader">
+            <p class="userNameHeader"> <a id="linkUsuario" href="#">@LoremIpsum</a></p>
+        </div>
+        <div class="userPicHeader">
+            <a href="#">
+                <img id="userHeaderPic" src="{{ url_for('static', filename='img/picMan.jpg') }}" alt="">
+            </a>
+        </div>
+    </header>
+    <main class="containerFondo">
+
+        <div class="opcionesGestionPerfil">
+            <div>
+                <input class="opcionGestionPerfil" id="btnEditarPerfilGestionPerfil" type="button" value="Editar perfil"
+                    style="background-color: #05A081; border-color: #05A081; border: width 5px; color:white; text-decoration:underline; font-weight:bold">
+
+            </div>
+            <div>
+                <a href="pantalla2GestionPerfil.html">
+                    <input class="opcionGestionPerfil" type="button" value="Cambiar contraseña"
+                        style="background-color:white"> </a>
+            </div>
+            <a href="/Templates/pantalla3GestionPerfil.html">
+                <input class="opcionGestionPerfil" type="button" value="Eliminar perfil"
+                    style="background-color:white"></a>
+        </div>
+        <div class="formularioGestionDePerfil" style="padding-top: 65px;">
+            <form action="">
+                <div class="nombreCompleto">
+                    <div class="nombreApellido">
+                        <label>Nombre</label>
+                        <input type="text" placeholder="Ingrese su nombre" required>
+                    </div>
+                    <div class="nombreApellido">
+                        <label>Apellido</label>
+                        <input type="text" placeholder="Ingrese su apellido" required>
+                    </div>
+                </div>
+
+                <label>Nombre de usuario</label>
+                <input type="text" placeholder="Ingrese su nombre de usuario" required>
+
+                <label>Correo electrónico</label>
+                <input type="email" placeholder="Ingrese su correo electrónico" required>
+
+                <label for="biografía">Biografía</label><br>
+                <textarea name="biografia" id="biografia" cols="70" rows="10"></textarea>
+                <div class="guardarCambiosEditarPerfil">
+                    <!-- cambiar este boton por submit -->
+                    <a href=""></a>
+                    <input type="button" value="Guardar cambios" class="iniciarSesion">
+                </div>
+            </form>
+        </div>
+
+    </main>
+    <footer>
+
+    </footer>
+
+</body>
+
+</html>

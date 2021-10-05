@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+
+<body>
+    <header class="headerBlack">
+        <div class="headerLogo">
+            <img src="{{ url_for('static', filename='img/nombreSistema.png') }}" alt="No se pudo cargar" id="logo">
+        </div>
+        <div class="userHeader">
+            <p class="userNameHeader"> <a id="linkUsuario" href="#">@LoremIpsum</a></p>
+        </div>
+        <div class="userPicHeader">
+            <a href="#">
+                <img id="userHeaderPic" src="{{ url_for('static', filename='img/picMan.jpg') }}" alt="">
+            </a>
+        </div>
+    </header>
+    <main class="containerFondo">
+
+        <div class="opcionesGestionPerfil">
+            <div>
+                <a href="/Templates/pantalla1GestionPerfil.html">
+                    <input class="opcionGestionPerfil" id="btnEditarPerfilGestionPerfil" type="button"
+                        value="Editar perfil" style="background-color:white"></a>
+
+            </div>
+            <div> <input class="opcionGestionPerfil" type="button" value="Cambiar contraseña"
+                    style="background-color: #05A081; border-color: #05A081; border: width 5px; color:white; text-decoration:underline; font-weight:bold">
+            </div>
+            <a href="/Templates/pantalla3GestionPerfil.html">
+                <input class="opcionGestionPerfil" type="button" value="Eliminar perfil"
+                    style="background-color:white"></a>
+        </div>
+        <div class="formularioGestionDePerfil">
+            <form action="">
+
+                <label>Ingrese su contraseña actual</label>
+                <input type="password" placeholder="Contraseña actual" required>
+
+                <label>Ingrese su nueva contraseña</label>
+                <input type="password" placeholder="Ingrese una nueva contraseña" required>
+                <label>Confirme su contraseña</label>
+                <input type="password" placeholder="Confirme la nueva contraseña" required>
+
+
+                <div class="guardarCambiosEditarPerfil">
+                    <input type="submit" value="Guardar cambios">
+                </div>
+            </form>
+        </div>
+
+    </main>
+    <footer>
+
+    </footer>
+
+</body>
+
+</html>
