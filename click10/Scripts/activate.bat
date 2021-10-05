@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\camic\Documents\CS\MisionTIC2022\Ciclo 3\Programacion\Reto\Sprint3\redSocialFotos\click10
+set VIRTUAL_ENV=C:\Users\camic\Documents\CS\MisionTIC2022\Ciclo 3\Programacion\Reto\Click10\Click10
 
 if not defined PROMPT set PROMPT=$P$G
 
@@ -16,7 +16,7 @@ if defined _OLD_VIRTUAL_PROMPT set PROMPT=%_OLD_VIRTUAL_PROMPT%
 if defined _OLD_VIRTUAL_PYTHONHOME set PYTHONHOME=%_OLD_VIRTUAL_PYTHONHOME%
 
 set _OLD_VIRTUAL_PROMPT=%PROMPT%
-set PROMPT=(click10) %PROMPT%
+set PROMPT=(Click10) %PROMPT%
 
 if defined PYTHONHOME set _OLD_VIRTUAL_PYTHONHOME=%PYTHONHOME%
 set PYTHONHOME=
