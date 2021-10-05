@@ -237,6 +237,7 @@ input[type=submit]:hover {
 }
 .guardarCambiosEditarPerfil {
   text-align: center;
+  background-color: transparent;
 }
 
 
