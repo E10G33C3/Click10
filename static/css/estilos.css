@@ -19,6 +19,7 @@ body{
   width: 100%;
   height: 100vmin;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
@@ -185,8 +186,7 @@ input[type=submit]:hover {
   font-size: 24px;
 }
 
-.userPicHeader {
-}
+
 #userHeaderPic {
 
   padding: 10px;
