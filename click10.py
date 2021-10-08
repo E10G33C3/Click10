@@ -56,7 +56,7 @@ def pantallaGestionPublicaciones():
     if request.method=='POST':
         # Handle POST Request here
         pass
-    return render_template("pantallaGestionPublicaciones.html")
+    return "pantallaGestionPublicaciones.html"
 
 @app.route('/Templates/pantallaMensajes.html',methods=['GET','POST'])
 def pantallaMensajes():
