@@ -320,11 +320,12 @@ footer{
 #textAreaBlock{
     height: 100%;
     padding-right: 8px;
+    width:80%
     
 }
 textarea{
 	resize:none;
-	width: 600px;
+	width: 80%;
 	height:80%;
 	font-size:13px;
 	margin-bottom:13px;
