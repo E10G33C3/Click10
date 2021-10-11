@@ -1,12 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta user-scalable="no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/pantallaMensajes.css')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link id="u-theme-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i">
+
+    <title>Click10 Mensajes</title>
 </head>
+
 <body>
-    <h1>Pantalla de Mensajes</h1>
+    <header class="bannerHeader" id="sec-205b">
+            <div class="logoContainer">
+                <a href="pantallaGestionPublicaciones.html" class="logoContainerLink" data-image-width="149"
+                    data-image-height="148" title=".">
+                    <img src="{{ url_for('static',filename='/img/LogoSolo_150.png')}}" class="imagenLogo">
+                </a>
+                <h1 class="containerTextoLogo">
+                    <a class="textoLogo" href="pantallaGestionPublicaciones.html">click10</a>
+                </h1>
+                <div class="usuario">
+                    <div class="containerTextoUsuario">
+                        <h3 class="nombreUsuario">
+                            <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-body-alt-color u-btn-1"
+                                href="pantallaPerfilUsuario.html" style="color: white">@LoremIpsum</a>
+                        </h3>
+                    </div>
+                    <a href="pantallaPerfilUsuario.html" class="imagenPerfilLink" data-image-width="300"
+                        data-image-height="300" title=".">
+                        <img src="{{ url_for('static', filename='/img/picMan.jpg')}}" class="imagenPerfil">
+                    </a>
+                </div>
+
+
+            </div>
+        
+    </header>
+    </header>
+    <div id="container">
+        <aside>
+            <div class="buscar">
+                <input type="text" placeholder="Buscar">
+            </div>
+            <ul class="userList">
+                <li>
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
+                    <div class="otherUsers">
+                        <h2>@TemetNosce</h2>
+                    </div>
+                </li>
+                <li>
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_02.jpg" alt="">
+                    <div class="otherUsers">
+                        <h2>Prénom Nom</h2>
+
+                    </div>
+                </li>
+                <li>
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_03.jpg" alt="">
+                    <div class="otherUsers">
+                        <h2>Prénom Nom</h2>
+
+                    </div>
+                </li>
+
+            </ul>
+        </aside>
+        <main>
+            <div class="header">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
+                <div class="chatWithUser">
+                    <h2>@TemetNosce</h2>
+                </div>
+            </div>
+            <div class="chatContainer">
+                <ul id="chat">
+                    <li class="you">
+                        <div class="entete">
+                            <span class="status green"></span>
+                            <h2>Vincent</h2>
+                            <h3>10:12AM, Today</h3>
+                        </div>
+                        <div class="triangle"></div>
+                        <div class="message">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+                            dolor.
+                        </div>
+
+                    </li>
+                    <li class="me">
+                        <div class="entete">
+                            <h3>10:12AM, Today</h3>
+                            <h2>Vincent</h2>
+                            <span class="status blue"></span>
+                        </div>
+                        <div class="triangle"></div>
+                        <div class="message">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+                            dolor.
+                        </div>
+                    </li>
+                    <li class="me">
+                        <div class="entete">
+                            <h3>10:12AM, Today</h3>
+                            <h2>Vincent</h2>
+                            <span class="status blue"></span>
+                        </div>
+                        <div class="triangle"></div>
+                        <div class="message">
+                            OK
+                        </div>
+                    </li>
+                    <li class="you">
+                        <div class="entete">
+                            <span class="status green"></span>
+                            <h2>Vincent</h2>
+                            <h3>10:12AM, Today</h3>
+                        </div>
+                        <div class="triangle"></div>
+                        <div class="message">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+                            dolor.
+                        </div>
+                    </li>
+                    <li class="me">
+                        <div class="entete">
+                            <h3>10:12AM, Today</h3>
+                            <h2>Vincent</h2>
+                            <span class="status blue"></span>
+                        </div>
+                        <div class="triangle"></div>
+                        <div class="message">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+                            dolor.
+                        </div>
+                    </li>
+                    <li class="me">
+                        <div class="entete">
+                            <h3>10:12AM, Today</h3>
+                            <h2>Vincent</h2>
+                            <span class="status blue"></span>
+                        </div>
+                        <div class="triangle"></div>
+                        <div class="message">
+                            OK
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <footer>
+
+                <div class="messageInteraction">
+                    <div id="textAreaBlock">
+                        <textarea placeholder="Type your message"></textarea>
+
+                    </div>
+                    <div class="buttonArea"> <a href="#"> Send </a></div>
+
+                </div>
+            </footer>
+        </main>
+    </div>
 </body>
+
 </html>
