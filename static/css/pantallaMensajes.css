@@ -241,7 +241,7 @@ main .header h3{
 }
 
 #chat{
-    padding: 20px 20px 100px 20px;
+    padding: 20px 20px 20px 20px;
     list-style-type:none;
 	overflow-y:auto;
     width: 100%;
@@ -320,7 +320,9 @@ footer{
 #textAreaBlock{
     height: 100%;
     padding-right: 8px;
-    width:80%
+    width:80%;
+    margin-top: auto;
+    margin-left: auto;
     
 }
 textarea{
@@ -328,7 +330,8 @@ textarea{
 	width: 80%;
 	height:80%;
 	font-size:13px;
-	margin-bottom:13px;
+	margin-bottom:auto;
+    margin-top: auto;
     margin-left: auto;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
