@@ -56,7 +56,7 @@ def dashboardSuperadmin():
     if request.method=='POST':
         # Handle POST Request here
         pass
-    return render_template("dashboardAuperadmin.html")
+    return render_template("dashboardSuperadmin.html")
 
 @app.route('/Templates/pantallaGestionPublicaciones.html',methods=['GET','POST'])
 def pantallaGestionPublicaciones():
