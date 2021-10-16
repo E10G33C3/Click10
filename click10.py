@@ -1,4 +1,11 @@
+from sqlite3.dbapi2 import IntegrityError
 from flask import Flask,redirect,url_for,render_template,request
+from clases import Persona
+import sqlite3
+from sqlite3 import Error
+from metodos import sql_consultar_datos_existentes, crear_nueva_persona
+
+from werkzeug.security import generate_password_hash
 
 app=Flask(__name__)
 @app.route("/")
@@ -20,9 +27,15 @@ def contrasena():
 def registro():
     if request.method=='POST':
         # Handle POST Request here
-        pass
-    return render_template("pantallaRegistro.html")
+        p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], request.form['contrasena'])
+        p.contrasena = generate_password_hash(p.contrasena)
+        try:
+            crear_nueva_persona('click10.db', p.nombre, p.apellido, p.nombre_de_usuario, p.email, p.contrasena)
+            return render_template("pantallaPerfilUsuario.html")
+        except IntegrityError:
 
+            return render_template("pantallaRegistro.html")
+    return render_template("pantallaRegistro.html")
 @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
 def gestionPerfil1():
     if request.method=='POST':
