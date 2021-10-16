@@ -1,19 +1,32 @@
+from os import error
 from sqlite3.dbapi2 import IntegrityError
-from flask import Flask,redirect,url_for,render_template,request
+from flask import Flask,redirect,url_for, render_template, request , flash  
 from clases import Persona
 import sqlite3
 from sqlite3 import Error
 from metodos import sql_consultar_datos_existentes, crear_nueva_persona
-
 from werkzeug.security import generate_password_hash
 
 app=Flask(__name__)
+
 @app.route("/")
-@app.route('/Templates/pantallaInicio.html',methods=['GET','POST'])
+@app.route('/Templates/pantallaInicio',methods=['GET','POST'])
 def inicio():
     if request.method=='POST':
         # Handle POST Request here
-        return render_template('pantallaInicio.html')
+        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'])
+        p.contrasena = generate_password_hash(p.contrasena)
+        # try: 
+        usuario_encontrado = sql_consultar_datos_existentes('click10.db', p.nombre_de_usuario)
+        print(usuario_encontrado[0][0])
+        print(p.contrasena)
+        if usuario_encontrado[0][0][0:] == str(p.contrasena):
+            return render_template("pantallaGestionPublicaciones.html")
+        else:
+            error = 'Contraseña incorrecta'
+            return render_template("pantallaInicio.html")
+        # except:
+            # return render_template('pantallaRegistro.html')
     return render_template('pantallaInicio.html')
 
 @app.route('/Templates/pantallaContrasena.html',methods=['GET','POST'])

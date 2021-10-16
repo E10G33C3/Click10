@@ -9,8 +9,8 @@ def sql_connection(db):
     except Error:
         print(Error)
         
-def sql_consultar_datos_existentes(bd, nombreDeUsuario, email):
-    strsql = "select nombreDeUsuario, email from personas where nombreDeUsuario='{0}' OR email='{1};".format(nombreDeUsuario, email)
+def sql_consultar_datos_existentes(bd, nombreDeUsuario):
+    strsql = "select contrasena from persona where nombreDeUsuario='{0}';".format(nombreDeUsuario)
     con = sql_connection(bd)
     cursorObj = con.cursor()
     cursorObj.execute(strsql)
