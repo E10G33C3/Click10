@@ -4,8 +4,8 @@ from flask import Flask,redirect,url_for, render_template, request , flash
 from clases import Persona
 import sqlite3
 from sqlite3 import Error
-from metodos import sql_consultar_datos_existentes, crear_nueva_persona
-from werkzeug.security import generate_password_hash
+from metodos import sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app=Flask(__name__)
 
@@ -15,13 +15,13 @@ def inicio():
     if request.method=='POST':
         # Handle POST Request here
         p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'])
-        p.contrasena = generate_password_hash(p.contrasena)
-        # try: 
+
+        # 
         usuario_encontrado = sql_consultar_datos_existentes('click10.db', p.nombre_de_usuario)
-        print(usuario_encontrado[0][0])
-        print(p.contrasena)
-        if usuario_encontrado[0][0][0:] == str(p.contrasena):
-            return render_template("pantallaGestionPublicaciones.html")
+        # print(check_password_hash(usuario_encontrado[0][0], p.contrasena))
+        
+        if check_password_hash(usuario_encontrado[0][0], p.contrasena):
+            return redirect('/Perfil/{}/'.format(p.nombre_de_usuario))
         else:
             error = 'Contraseña incorrecta'
             return render_template("pantallaInicio.html")
@@ -40,7 +40,7 @@ def contrasena():
 def registro():
     if request.method=='POST':
         # Handle POST Request here
-        p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], request.form['contrasena'])
+        p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], request.form['contrasena'], False, False,False, "URL")
         p.contrasena = generate_password_hash(p.contrasena)
         try:
             crear_nueva_persona('click10.db', p.nombre, p.apellido, p.nombre_de_usuario, p.email, p.contrasena)
@@ -49,12 +49,15 @@ def registro():
 
             return render_template("pantallaRegistro.html")
     return render_template("pantallaRegistro.html")
-@app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
-def gestionPerfil1():
+
+@app.route('/Perfil/<string:nombreDeUsuario>/',methods=['GET','POST'])
+def gestionPerfil1(nombreDeUsuario):
+    datos = sql_consultar_datos_usuario('click10.db', nombreDeUsuario)
+    print(datos)
     if request.method=='POST':
         # Handle POST Request here
-        pass
-    return render_template("pantalla1GestionPerfil.html")
+        return "perfil POST de {}".format(nombreDeUsuario)
+    return "perfil GET de  {}".format(nombreDeUsuario)
 
 @app.route('/Templates/pantalla2GestionPerfil.html',methods=['GET','POST'])
 def gestionPerfil2():
