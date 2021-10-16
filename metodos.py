@@ -29,4 +29,12 @@ def crear_nueva_persona(bd, nombre, apellido, nombreDeUsuario, email, contrasena
     #actualizar base de datos
     con.commit()
     con.close()
+    
+def sql_consultar_datos_usuario(bd, nombreDeUsuario):
+    strsql = "select * from persona where nombreDeUsuario='{0}';".format(nombreDeUsuario)
+    con = sql_connection(bd)
+    cursorObj = con.cursor()
+    cursorObj.execute(strsql)
+    registros_existentes = cursorObj.fetchall()
+    return registros_existentes
        
