@@ -7,6 +7,7 @@ from sqlite3 import Error
 from metodos import sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 app=Flask(__name__)
 
 @app.route("/")
@@ -89,10 +90,11 @@ def dashboardSuperadmin():
 
 @app.route('/Templates/pantallaGestionPublicaciones.html',methods=['GET','POST'])
 def pantallaGestionPublicaciones():
+    times = 10
     if request.method=='POST':
         # Handle POST Request here
         pass
-    return render_template("pantallaGestionPublicaciones.html")
+    return render_template("pantallaGestionPublicaciones.html", times=times)
 
 @app.route('/Templates/pantallaMensajes.html',methods=['GET','POST'])
 def pantallaMensajes():
