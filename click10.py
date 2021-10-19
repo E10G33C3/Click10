@@ -15,7 +15,7 @@ app=Flask(__name__)
 def inicio():
     if request.method=='POST':
         # Handle POST Request here
-        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'])
+        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'], False, False, False, "url")
 
         # 
         usuario_encontrado = sql_consultar_datos_existentes('click10.db', p.nombre_de_usuario)
