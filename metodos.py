@@ -38,3 +38,35 @@ def sql_consultar_datos_usuario(bd, nombreDeUsuario):
     registros_existentes = cursorObj.fetchall()
     return registros_existentes
        
+def editar_datos(bd, nombre, apellido, email, nombre_de_usuario):
+    strsql = "update persona set nombre='{0}', apellido='{1}', email='{2}' where nombreDeUsuario='{3}';".format(nombre,apellido,email,nombre_de_usuario)
+    con = sql_connection(bd)
+    cursor_obj = con.cursor()
+    cursor_obj.execute(strsql)
+    con.commit()
+    con.close()
+    
+
+def eliminar_datos(bd, nombreDeUsuario, email):
+    strsql = "update persona set usuarioActivo=0 where nombreDeUsuario='{0}';".format(nombreDeUsuario, email)
+    con = sql_connection(bd)
+    cursor_obj = con.cursor()
+    cursor_obj.execute(strsql)
+    con.commit()
+    con.close()
+
+# def eliminar_datos(bd, nombreDeUsuario, email):
+#     strsql = "delete from persona where nombreDeUsuario = '{0}';".format(nombreDeUsuario, email)
+#     con = sql_connection(bd)
+#     cursor_obj = con.cursor()
+#     cursor_obj.execute(strsql)
+#     con.commit()
+#     con.close()
+
+def cambiar_contrasena(bd, contrasenaActual, contrasenaNueva, confirmarContrasena, nombreDeUsuario):
+    strsql = "update persona set contrasena='{0}' where nombreDeUsuario='{1}';".format(contrasenaActual,contrasenaNueva,confirmarContrasena, nombreDeUsuario)
+    con = sql_connection(bd)
+    cursor_obj = con.cursor()
+    cursor_obj.execute(strsql)
+    con.commit()
+    con.close()

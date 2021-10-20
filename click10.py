@@ -1,10 +1,11 @@
 from os import error
+import re
 from sqlite3.dbapi2 import IntegrityError
 from flask import Flask,redirect,url_for, render_template, request , flash  
 from clases import Persona
 import sqlite3
 from sqlite3 import Error
-from metodos import sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario
+from metodos import editar_datos, eliminar_datos, sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -22,7 +23,8 @@ def inicio():
         # print(check_password_hash(usuario_encontrado[0][0], p.contrasena))
         
         if check_password_hash(usuario_encontrado[0][0], p.contrasena):
-            return redirect('/Perfil/{}/'.format(p.nombre_de_usuario))
+            # return redirect('/Perfil/{}/'.format(p.nombre_de_usuario))
+            return redirect("pantallaPerfilUsuario.html")
         else:
             error = 'Contraseña incorrecta'
             return render_template("pantallaInicio.html")
@@ -51,27 +53,108 @@ def registro():
             return render_template("pantallaRegistro.html")
     return render_template("pantallaRegistro.html")
 
-@app.route('/Perfil/<string:nombreDeUsuario>/',methods=['GET','POST'])
-def gestionPerfil1(nombreDeUsuario):
-    datos = sql_consultar_datos_usuario('click10.db', nombreDeUsuario)
-    print(datos)
+@app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
+def editar():
     if request.method=='POST':
         # Handle POST Request here
-        return "perfil POST de {}".format(nombreDeUsuario)
-    return "perfil GET de  {}".format(nombreDeUsuario)
+        p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], 'contrasena', False, False,False, "URL")
+       
+        try:
+            editar_datos('click10.db', p.nombre, p.apellido, p.email, p.nombre_de_usuario)
+            return render_template("pantallaPerfilUsuario.html")
+        except IntegrityError:
+
+            return render_template("pantalla1GestionPerfil.html")
+    return render_template("pantalla1GestionPerfil.html")
+# @app.route('/Perfil/<string:nombreDeUsuario>/',methods=['GET','POST'])
+# @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
+# @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
+# def actualizarDatos():
+#     msg = "msg"
+#     if request.method == 'POST':
+
+#         nombre = request.form['nombre']
+#         apellido = request.form['apellido']
+#         nombreDeUsuario = request.form['nombreDeUsuario']
+#         email = request.form['email']
+#         with sqlite3.connect("click10.db") as con:
+#             cur = con.cursor()
+#             cur.execute("UPDATE persona SET nombre=%s, apellido=%s, email=%s WHERE nombreDeUsuario=%s", (nombre, apellido, nombreDeUsuario, email))
+#             con.commit()
+#             msg = "datos guardados"
+#         return render_template("pantalla1GestionPerfil.html")
+#     return render_template("pantallaPerfilUsuario.html", msg = msg)
+# def gestionPerfil1():
+#     if request.method == 'POST':
+#         pass
+#     return render_template("pantalla1GestionPerfil.html")
+
+
+# @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
+# # def gestionPerfil1():
+# #     if request.method == "POST":
+# #         try:
+# #             nombre = request.form['nombre']
+# #             apellido = request.form['apellido']
+# #             nombreDeUsuario = request.form['nombreDeUsuario']
+# #             email = request.form['email']
+# #             with sqlite3.connect("click10.db") as con:
+# #                 cur = con.cursor()
+# #                 cur.execute("UPDATE persona SET nombre=%s, apellido=%s, email=%s WHERE nombreDeUsuario=%s", (nombre, apellido, nombreDeUsuario, email))
+# #                 con.commit()
+# #         except:
+# #             con.rollback()
+# #             msg = "We can not add persona"
+# #         finally:
+# #             return render_template("/Templates/pantalla1GestionPerfil.html")
+# def gestionPerfil1():
+#     if request.method == 'POST':
+#         pass
+#     return render_template("pantalla1GestionPerfil.html")
 
 @app.route('/Templates/pantalla2GestionPerfil.html',methods=['GET','POST'])
-def gestionPerfil2():
+def cambiarContrasena():
     if request.method=='POST':
         # Handle POST Request here
-        pass
+        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'], False, False,False, "URL")
+       
+        try:
+            editar_datos('click10.db', p.contrasena, p.nombre_de_usuario)
+            return render_template("pantallaPerfilUsuario.html")
+        except IntegrityError:
+
+            return render_template("pantalla2GestionPerfil.html")
     return render_template("pantalla2GestionPerfil.html")
 
+# @app.route("/Templates/pantalla3GestionPerfil.html",methods=['GET','POST'])
+# def eliminarCuenta():  
+#     nombreDeUsuario = request.form['nombreDeUsuario']
+#     with sqlite3.connect("click10.db") as con:  
+#         try:  
+#             cur = con.cursor()  
+#             cur.execute("delete from persona where nombreDeUsuario = %s", (nombreDeUsuario))  
+#             msg = "record successfully deleted"  
+            
+#         except:  
+#             print(sqlite3.Error.mensaje)
+#             msg = "can't be deleted"
+              
+#         finally:  
+            
+#             return render_template("pantallaPerfilUsuario.html",msg = msg)  
+
 @app.route('/Templates/pantalla3GestionPerfil.html',methods=['GET','POST'])
-def gestionPerfil3():
+def eliminar():
     if request.method=='POST':
         # Handle POST Request here
-        pass
+        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], request.form['email'], 'contrasena', False, False,False, "URL")
+       
+        try:
+            eliminar_datos('click10.db', p.nombre_de_usuario, p.email)
+            return render_template("pantallaPerfilUsuario.html")
+        except IntegrityError:
+
+            return render_template("pantalla3GestionPerfil.html")
     return render_template("pantalla3GestionPerfil.html")
 
 @app.route('/Templates/dashboardAdmin.html',methods=['GET','POST'])
