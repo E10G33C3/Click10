@@ -23,6 +23,9 @@
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="pantallaRegistro">
     <meta property="og:type" content="website">
+
+    
+
   </head>
   <body class="u-body">
     <section class="u-clearfix u-valign-middle-xs u-section-1" id="carousel_6967">
@@ -38,9 +41,9 @@
             </div>
             <div class="u-align-left u-container-style u-custom-color-1 u-layout-cell u-left-cell u-shape-rectangle u-size-30 u-layout-cell-2">
               <div class="u-container-layout u-container-layout-2">
-                <h2 class="u-custom-font u-font-roboto-condensed u-text u-text-default u-text-2">Regístrate</h2>
+                <h2 class="u-custom-font u-font-roboto-condensed u-text u-text-default u-text-2">¿No tienes una cuenta? ¡Regístrate!</h2>
                 <div class="u-expanded-width-sm u-expanded-width-xs u-form u-form-1">
-                  <form action="/pantallaGestionPublicaciones" method="POST" class="u-clearfix u-form-custom-backend u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="inicioDeSesion" redirect="true">
+                  <form action="/Templates/pantallaRegistro.html" method="POST" class="u-clearfix u-form-custom-backend u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="inicioDeSesion" redirect="true">
                     <input type="hidden" id="siteId" name="siteId" value="807968">
                     <input type="hidden" id="pageId" name="pageId" value="808219">
                     <div class="u-form-group u-form-name u-form-partition-factor-2 u-form-group-1">
@@ -53,27 +56,27 @@
                     </div>
                     <div class="u-form-group">
                       <label for="name-6797" class="u-label">Nombre de usuario</label>
-                      <input type="text" placeholder="Ingresa tu nombre de usuario" id="name-6797" name="nombreDeUsuario" class="u-border-1 u-border-palette-4-dark-3 u-input u-input-rectangle u-radius-10 u-white u-input-3" required="required">
+                      <input type="text" placeholder="Ingresa tu nombre de usuario" id="name-6797" name="nombreDeUsuario" class="u-border-1 u-border-palette-4-dark-3 u-input u-input-rectangle u-radius-10 u-white u-input-3" required>
                     </div>
                     <div class="u-form-email u-form-group u-form-group-4">
                       <label for="email-4ec4" class="u-label">Correo electrónico</label>
-                      <input type="email" placeholder="Escribe tu correo electrónico" id="email-4ec4" name="email" class="u-border-1 u-border-palette-4-dark-3 u-input u-input-rectangle u-radius-10 u-white u-input-4" required="">
+                      <input type="email" placeholder="Escribe tu correo electrónico" id="email-4ec4" name="email" class="u-border-1 u-border-palette-4-dark-3 u-input u-input-rectangle u-radius-10 u-white u-input-4" required>
                     </div>
                     <div class="u-form-group u-form-group-5">
                       <label for="email-6797" class="u-label">Contraseña</label>
-                      <input type="password" placeholder="Ingresa tu contraseña" id="email-6797" name="contrasena" class="u-border-1 u-border-palette-4-dark-3 u-input u-input-rectangle u-radius-10 u-white u-input-5" required="required" spellcheck="false">
+                      <input type="password" placeholder="Ingresa tu contraseña" id="password" name="contrasena" class="u-border-1 u-border-palette-4-dark-3 u-input u-input-rectangle u-radius-10 u-white u-input-5" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,24}$" title=" Tu contraseña debe tener al menos ocho (8) caracteres e inculir al menos una mayúscula, una minúscula, un número, y un símbolo de estos: !@#$%^&*_=+-">
                     </div>
                     <div class="u-form-group u-form-group-6">
                       <label for="text-c069" class="u-label">Confirmación de contraseña</label>
-                      <input type="password" placeholder="Confirma tu contraseña" id="text-c069" name="confirmacionContrasena" class="u-border-1 u-border-palette-4-dark-3 u-input u-input-rectangle u-radius-10 u-white u-input-6">
+                      <input type="password" placeholder="Confirma tu contraseña" id="passwordConfirmation" name="confirmacionContrasena" class="u-border-1 u-border-palette-4-dark-3 u-input u-input-rectangle u-radius-10 u-white u-input-6" required>
                     </div>
                     <div class="u-form-checkbox u-form-group u-form-group-7">
-                      <input type="checkbox" id="checkbox-9b6f" name="tyc" value="On" required="required">
+                      <input type="checkbox" id="checkbox-9b6f" name="tyc" value="On" required>
                       <label for="checkbox-9b6f" class="u-label">Acepto los términos y condiciones</label>
                     </div>
                     <div class="u-align-center u-form-group u-form-submit u-form-group-8">
-                      <a href="/Templates/pantallaPerfilUsuario.html" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-palette-4-dark-3 u-radius-25 u-btn-1">Regístrate</a>
-                      <input type="submit" value="submit" class="u-form-control-hidden">
+                      <!-- <a href="/Templates/pantallaPerfilUsuario.html" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-palette-4-dark-3 u-radius-25 u-btn-1">Regístrate</a> -->
+                      <button type="submit" value="submit" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-palette-4-dark-3 u-radius-25 u-btn-1">Regístrate</button>
                     </div>
                     <div class="u-form-send-message u-form-send-success">Thank you! Your message has been sent.</div>
                     <div class="u-form-send-error u-form-send-message">Unable to send your message. Please fix errors then try again.</div>
