@@ -37,8 +37,10 @@ def inicio():
                 user = session["user"]
                 #return pantallaPerfilUsuario()
                 return redirect("pantallaPerfilUsuario.html/"+user)
+            else:
+                error = 'Contraseña incorrecta'
+                return render_template("pantallaInicio.html")
         else:
-            error = 'Contraseña incorrecta'
             return render_template("pantallaInicio.html")
         # except:
             # return render_template('pantallaRegistro.html')
