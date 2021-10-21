@@ -7,6 +7,7 @@ from sqlite3 import Error
 from metodos import sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 app=Flask(__name__)
 
 @app.route("/")
@@ -14,7 +15,7 @@ app=Flask(__name__)
 def inicio():
     if request.method=='POST':
         # Handle POST Request here
-        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'])
+        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'],False , False, False, 'URL' )
 
         # 
         usuario_encontrado = sql_consultar_datos_existentes('click10.db', p.nombre_de_usuario)
@@ -73,6 +74,8 @@ def gestionPerfil3():
         pass
     return render_template("pantalla3GestionPerfil.html")
 
+
+# -------RUTAS DASHBOARD ADMIN---------------
 @app.route('/Templates/dashboardAdmin.html',methods=['GET','POST'])
 def dashboardAdmin():
     if request.method=='POST':
@@ -80,12 +83,61 @@ def dashboardAdmin():
         pass
     return render_template("dashboardAdmin.html")
 
+
+@app.route('/Templates/dashAdmin__Config.html',methods=['GET','POST'])
+def dashAdmin__Config():
+    if request.method=='POST':
+        # Handle POST Request here
+        pass
+    return render_template("dashAdmin__Config.html")
+
+
+@app.route('/Templates/dashAdmin__listaPubli.html',methods=['GET','POST'])
+def dashAdmin__listaPubli():
+    if request.method=='POST':
+        # Handle POST Request here
+        pass
+    return render_template("dashAdmin__listaPubli.html")
+
+
+@app.route('/Templates/dashAdmin__listaUsuario.html',methods=['GET','POST'])
+def dashAdmin__listaUsuario():
+    if request.method=='POST':
+        # Handle POST Request here
+        pass
+    return render_template("dashAdmin__listaUsuario.html")
+
+
+
+# -------RUTAS DASHBOARD SUPER ADMIN---------------
 @app.route('/Templates/dashboardSuperadmin.html',methods=['GET','POST'])
-def dashboardSuperadmin():
+def dashboardSuperAdmin():
     if request.method=='POST':
         # Handle POST Request here
         pass
     return render_template("dashboardSuperadmin.html")
+
+@app.route('/Templates/dashSuperAdmin__listaAdmin.html',methods=['GET','POST'])
+def dashSuperAdmin__listaAdmin():
+    if request.method=='POST':
+        # Handle POST Request here
+        pass
+    return render_template("dashSuperAdmin__listaAdmin.html")
+
+@app.route('/Templates/dashSuperAdmin__listaPubli.html',methods=['GET','POST'])
+def dashSuperAdmin__listaPubli():
+    if request.method=='POST':
+        # Handle POST Request here
+        pass
+    return render_template("dashSuperAdmin__listaPubli.html")
+
+@app.route('/Templates/dashSuperAdmin__listaUsuario.html',methods=['GET','POST'])
+def dashSuperAdmin__listaUsuario():
+    if request.method=='POST':
+        # Handle POST Request here
+        pass
+    return render_template("dashSuperAdmin__listaUsuario.html")
+# -------RUTAS DASHBOARD SUPER ADMIN---------------
 
 @app.route('/Templates/pantallaGestionPublicaciones.html',methods=['GET','POST'])
 def pantallaGestionPublicaciones():
