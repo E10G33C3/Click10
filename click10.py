@@ -96,51 +96,6 @@ def editar():
             return render_template("pantalla1GestionPerfil.html")
         
     return render_template("pantalla1GestionPerfil.html", user=user, nombre=p.nombre, apellido=p.apellido, email=p.email )
-# @app.route('/Perfil/<string:nombreDeUsuario>/',methods=['GET','POST'])
-# @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
-# @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
-# def actualizarDatos():
-#     msg = "msg"
-#     if request.method == 'POST':
-
-#         nombre = request.form['nombre']
-#         apellido = request.form['apellido']
-#         nombreDeUsuario = request.form['nombreDeUsuario']
-#         email = request.form['email']
-#         with sqlite3.connect("click10.db") as con:
-#             cur = con.cursor()
-#             cur.execute("UPDATE persona SET nombre=%s, apellido=%s, email=%s WHERE nombreDeUsuario=%s", (nombre, apellido, nombreDeUsuario, email))
-#             con.commit()
-#             msg = "datos guardados"
-#         return render_template("pantalla1GestionPerfil.html")
-#     return render_template("pantallaPerfilUsuario.html", msg = msg)
-# def gestionPerfil1():
-#     if request.method == 'POST':
-#         pass
-#     return render_template("pantalla1GestionPerfil.html")
-
-
-# @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
-# # def gestionPerfil1():
-# #     if request.method == "POST":
-# #         try:
-# #             nombre = request.form['nombre']
-# #             apellido = request.form['apellido']
-# #             nombreDeUsuario = request.form['nombreDeUsuario']
-# #             email = request.form['email']
-# #             with sqlite3.connect("click10.db") as con:
-# #                 cur = con.cursor()
-# #                 cur.execute("UPDATE persona SET nombre=%s, apellido=%s, email=%s WHERE nombreDeUsuario=%s", (nombre, apellido, nombreDeUsuario, email))
-# #                 con.commit()
-# #         except:
-# #             con.rollback()
-# #             msg = "We can not add persona"
-# #         finally:
-# #             return render_template("/Templates/pantalla1GestionPerfil.html")
-# def gestionPerfil1():
-#     if request.method == 'POST':
-#         pass
-#     return render_template("pantalla1GestionPerfil.html")
 
 @app.route('/Templates/pantalla2GestionPerfil.html',methods=['GET','POST'])
 def cambiarContrasena():
@@ -157,7 +112,8 @@ def cambiarContrasena():
     if request.method=='POST':
         # Handle POST Request here
         p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'], False, False,False, "URL")
-       
+        p.contrasena = generate_password_hash(p.contrasena)
+        
         try:
             editar_datos('click10.db', p.contrasena, p.nombre_de_usuario)
             return render_template("pantallaPerfilUsuario.html")
@@ -165,23 +121,6 @@ def cambiarContrasena():
 
             return render_template("pantalla2GestionPerfil.html")
     return render_template("pantalla2GestionPerfil.html", user=user)
-
-# @app.route("/Templates/pantalla3GestionPerfil.html",methods=['GET','POST'])
-# def eliminarCuenta():  
-#     nombreDeUsuario = request.form['nombreDeUsuario']
-#     with sqlite3.connect("click10.db") as con:  
-#         try:  
-#             cur = con.cursor()  
-#             cur.execute("delete from persona where nombreDeUsuario = %s", (nombreDeUsuario))  
-#             msg = "record successfully deleted"  
-            
-#         except:  
-#             print(sqlite3.Error.mensaje)
-#             msg = "can't be deleted"
-              
-#         finally:  
-            
-#             return render_template("pantallaPerfilUsuario.html",msg = msg)  
 
 @app.route('/Templates/pantalla3GestionPerfil.html',methods=['GET','POST'])
 def eliminar():
