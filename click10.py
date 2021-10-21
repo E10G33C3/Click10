@@ -28,14 +28,15 @@ def inicio():
         usuario_encontrado = sql_consultar_datos_existentes('click10.db', p.nombre_de_usuario)
         # print(check_password_hash(usuario_encontrado[0][0], p.contrasena))
         
-        if check_password_hash(usuario_encontrado[0][0], p.contrasena):
-            # return redirect('/Perfil/{}/'.format(p.nombre_de_usuario))
-            #session.clear()
-            session["user"] = p.nombre_de_usuario
-            session["auth"] = 1
-            user = session["user"]
-            #return pantallaPerfilUsuario()
-            return redirect("pantallaPerfilUsuario.html/"+user)
+        if usuario_encontrado:
+            if check_password_hash(usuario_encontrado[0][0], p.contrasena):
+                # return redirect('/Perfil/{}/'.format(p.nombre_de_usuario))
+                #session.clear()
+                session["user"] = p.nombre_de_usuario
+                session["auth"] = 1
+                user = session["user"]
+                #return pantallaPerfilUsuario()
+                return redirect("pantallaPerfilUsuario.html/"+user)
         else:
             error = 'Contraseña incorrecta'
             return render_template("pantallaInicio.html")
