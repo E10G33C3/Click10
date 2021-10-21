@@ -61,7 +61,10 @@ def registro():
         p.contrasena = generate_password_hash(p.contrasena)
         try:
             crear_nueva_persona('click10.db', p.nombre, p.apellido, p.nombre_de_usuario, p.email, p.contrasena)
-            return render_template("pantallaPerfilUsuario.html")
+            session["user"] = p.nombre_de_usuario
+            session["auth"] = 1
+            user = session["user"]
+            return redirect("pantallaPerfilUsuario.html/"+user)
         except IntegrityError:
 
             return render_template("pantallaRegistro.html")
