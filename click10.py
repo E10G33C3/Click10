@@ -1,7 +1,7 @@
 from os import error
 import re
 from sqlite3.dbapi2 import IntegrityError
-from flask import Flask,redirect,url_for, render_template, request , flash  
+from flask import Flask,redirect,url_for, render_template, request , flash , session
 from clases import Persona
 import sqlite3
 from sqlite3 import Error
@@ -10,6 +10,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app=Flask(__name__)
+
+app.secret_key = "click10"
+
+app.before_request
+def session_management():
+    session.permanent = True
 
 @app.route("/")
 @app.route('/Templates/pantallaInicio',methods=['GET','POST'])
@@ -24,7 +30,12 @@ def inicio():
         
         if check_password_hash(usuario_encontrado[0][0], p.contrasena):
             # return redirect('/Perfil/{}/'.format(p.nombre_de_usuario))
-            return redirect("pantallaPerfilUsuario.html")
+            #session.clear()
+            session["user"] = p.nombre_de_usuario
+            session["auth"] = 1
+            user = session["user"]
+            #return pantallaPerfilUsuario()
+            return redirect("pantallaPerfilUsuario.html/"+user)
         else:
             error = 'Contraseña incorrecta'
             return render_template("pantallaInicio.html")
@@ -238,11 +249,24 @@ def pantallaMensajes():
     return render_template("pantallaMensajes.html")
 
 @app.route('/Templates/pantallaPerfilUsuario.html',methods=['GET','POST'])
-def pantallaPerfilUsuario():
-    if request.method=='POST':
-        # Handle POST Request here
-        pass
-    return render_template("pantallaPerfilUsuario.html")
+@app.route('/Templates/pantallaPerfilUsuario.html/<user>',methods=['GET','POST'])
+def pantallaPerfilUsuario(user = None):
+    # if request.method=='POST':
+    #     # Handle POST Request here
+    #     pass
+    # return render_template("pantallaPerfilUsuario.html")
+    try:
+        user = session["user"]
+        auth = session["auth"]
+    except:
+        user = "unknown"
+        auth = 0
+    # Hacer algo si auth == 0
+    if user == "unknown":
+        return redirect(url_for('inicio'))
+    # Por ejemplo cargar el template de login
+    #return "<p>¡Hola %s!</p>" % user
+    return render_template("pantallaPerfilUsuario.html", user = user)
 
 @app.route('/Templates/pantallaVistaPublicacion.html',methods=['GET','POST'])
 def pantallaVistaPublicacion():
@@ -250,6 +274,13 @@ def pantallaVistaPublicacion():
         # Handle POST Request here
         pass
     return render_template("pantallaVistaPublicacion.html")
+
+@app.route("/logout")
+def logout():
+  session.clear()
+  session["user"] = "unknown"
+  session["auth"] = 0
+  return redirect(url_for('inicio'))
 
 if __name__ == '__main__':
     #DEBUG is SET to TRUE. CHANGE FOR PROD
