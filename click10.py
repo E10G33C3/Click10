@@ -61,7 +61,10 @@ def registro():
         p.contrasena = generate_password_hash(p.contrasena)
         try:
             crear_nueva_persona('click10.db', p.nombre, p.apellido, p.nombre_de_usuario, p.email, p.contrasena)
-            return render_template("pantallaPerfilUsuario.html")
+            session["user"] = p.nombre_de_usuario
+            session["auth"] = 1
+            user = session["user"]
+            return redirect("pantallaPerfilUsuario.html/"+user)
         except IntegrityError:
 
             return render_template("pantallaRegistro.html")
@@ -69,6 +72,16 @@ def registro():
 
 @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
 def editar():
+    # sesión
+    try:
+        user = session["user"]
+        auth = session["auth"]
+    except:
+        user = "unknown"
+        auth = 0
+    if user == "unknown":
+        return redirect(url_for('inicio'))
+    
     if request.method=='POST':
         # Handle POST Request here
         p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], 'contrasena', False, False,False, "URL")
@@ -77,9 +90,9 @@ def editar():
             editar_datos('click10.db', p.nombre, p.apellido, p.email, p.nombre_de_usuario)
             return render_template("pantallaPerfilUsuario.html")
         except IntegrityError:
-
             return render_template("pantalla1GestionPerfil.html")
-    return render_template("pantalla1GestionPerfil.html")
+        
+    return render_template("pantalla1GestionPerfil.html", user=user)
 # @app.route('/Perfil/<string:nombreDeUsuario>/',methods=['GET','POST'])
 # @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
 # @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
@@ -128,6 +141,16 @@ def editar():
 
 @app.route('/Templates/pantalla2GestionPerfil.html',methods=['GET','POST'])
 def cambiarContrasena():
+    # sesión
+    try:
+        user = session["user"]
+        auth = session["auth"]
+    except:
+        user = "unknown"
+        auth = 0
+    if user == "unknown":
+        return redirect(url_for('inicio'))
+    
     if request.method=='POST':
         # Handle POST Request here
         p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'], False, False,False, "URL")
@@ -138,7 +161,7 @@ def cambiarContrasena():
         except IntegrityError:
 
             return render_template("pantalla2GestionPerfil.html")
-    return render_template("pantalla2GestionPerfil.html")
+    return render_template("pantalla2GestionPerfil.html", user=user)
 
 # @app.route("/Templates/pantalla3GestionPerfil.html",methods=['GET','POST'])
 # def eliminarCuenta():  
@@ -159,6 +182,18 @@ def cambiarContrasena():
 
 @app.route('/Templates/pantalla3GestionPerfil.html',methods=['GET','POST'])
 def eliminar():
+    
+    # sesión
+    try:
+        user = session["user"]
+        auth = session["auth"]
+    except:
+        user = "unknown"
+        auth = 0
+    if user == "unknown":
+        return redirect(url_for('inicio'))
+    
+    
     if request.method=='POST':
         # Handle POST Request here
         p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], request.form['email'], 'contrasena', False, False,False, "URL")
@@ -169,7 +204,7 @@ def eliminar():
         except IntegrityError:
 
             return render_template("pantalla3GestionPerfil.html")
-    return render_template("pantalla3GestionPerfil.html")
+    return render_template("pantalla3GestionPerfil.html", user=user)
 
 
 # -------RUTAS DASHBOARD ADMIN---------------
@@ -238,11 +273,20 @@ def dashSuperAdmin__listaUsuario():
 
 @app.route('/Templates/pantallaGestionPublicaciones.html',methods=['GET','POST'])
 def pantallaGestionPublicaciones():
+    try:
+        user = session["user"]
+        auth = session["auth"]
+    except:
+        user = "unknown"
+        auth = 0
+    # Hacer algo si auth == 0
+    if user == "unknown":
+        return redirect(url_for('inicio'))
     times = 10
     if request.method=='POST':
         # Handle POST Request here
         pass
-    return render_template("pantallaGestionPublicaciones.html", times=times)
+    return render_template("pantallaGestionPublicaciones.html", times=times, user=user)
 
 @app.route('/Templates/pantallaMensajes.html',methods=['GET','POST'])
 def pantallaMensajes():
