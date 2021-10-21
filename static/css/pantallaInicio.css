@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 .u-section-1 {
   min-height: 700px;
 }

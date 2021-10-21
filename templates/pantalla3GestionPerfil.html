@@ -81,7 +81,7 @@
                     href="/Templates/pantalla1GestionPerfil.html">Editar Perfil</a>
                 </li>
                 <li class="u-nav-item"><a class="u-button-style u-nav-link"
-                    href="/Templates/pantalla3GestionPerfil.html">Eliminar cuenta</a>
+                    href="/templates/pantalla3GestionPerfil.html">Eliminar cuenta</a>
                 </li>
                 <li class="u-nav-item"><a class="u-button-style u-nav-link"
                     href="/Templates/pantalla2GestionPerfil.html">Cambiar contraseña</a>
@@ -101,19 +101,20 @@
         <div class="u-container-layout u-valign-middle-xl u-container-layout-1">
           <h1 class="u-custom-font u-font-roboto-condensed u-text u-text-1" spellcheck="false">Eliminar cuenta</h1>
           <div class="u-align-left u-expanded-width-lg u-expanded-width-md u-expanded-width-sm u-form u-form-1">
-            <form action="https://nicepage.com/editor/Forms/Process" method="POST"
+            <!-- <form action="https://nicepage.com/editor/Forms/Process" method="POST" -->
+            <form action="/Templates/pantalla3GestionPerfil.html" action="https://nicepage.com/editor/Forms/Process" method="POST"
               class="u-clearfix u-form-spacing-28 u-form-vertical u-inner-form" style="padding: 10px" source="email"
               name="form">
               <input type="hidden" id="siteId" name="siteId" value="818043" wfd-invisible="true">
               <input type="hidden" id="pageId" name="pageId" value="818210" wfd-invisible="true">
               <div class="u-form-group u-form-name u-form-group-1">
                 <label for="name-e3f7" class="u-label">Usuario</label>
-                <input type="text" placeholder="Escribe tu nombre de usuario" id="name-e3f7" name="name-2"
-                  class="u-input u-input-rectangle u-white" required="">
+                <input type="text" placeholder="Escribe tu nombre de usuario" id="nombreDeUsuario" name="nombreDeUsuario"
+                  class="u-input u-input-rectangle u-white" required>
               </div>
               <div class="u-form-email u-form-group u-form-group-2">
-                <label for="email-5a14" class="u-label" wfd-invisible="true">Contraseña</label>
-                <input type="email" placeholder="Escribe tu contraseña" id="email-5a14" name="password"
+                <label for="email-5a14" class="u-label" wfd-invisible="true">Correo electrónico</label>
+                <input type="email" placeholder="Escribe tu contraseña" id="email-5a14" name="email"
                   class="u-input u-input-rectangle u-white" required="">
               </div>
               <div class="u-align-center u-form-group u-form-submit u-form-group-3">
