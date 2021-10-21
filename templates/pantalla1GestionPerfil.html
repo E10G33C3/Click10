@@ -113,22 +113,22 @@
               <div class="u-form-group u-form-name u-form-partition-factor-2 u-form-group-1">
                 <label for="name-5a14" class="u-label" wfd-invisible="true">Nombre</label>
                 <input type="text" placeholder="Escribe tu nombre" id="name-5a14" name="nombre"
-                  class="u-input u-input-rectangle u-white" required spellcheck="false">
+                  class="u-input u-input-rectangle u-white" required spellcheck="false" value="{{nombre}}">
               </div>
               <div class="u-form-group u-form-name u-form-partition-factor-2 u-form-group-2">
                 <label for="name-f12a" class="u-label">Apellido</label>
                 <input type="text" placeholder="Escribe tu apellido" id="name-f12a" name="apellido"
-                  class="u-input u-input-rectangle u-white" required>
+                  class="u-input u-input-rectangle u-white" required value="{{apellido}}">
               </div>
               <div class="u-form-group u-form-name u-form-group-3">
                 <label for="name-e3f7" class="u-label">Usuario</label>
                 <input type="text" placeholder="Escribe tu nombre de usuario" id="name-e3f7" name="nombreDeUsuario"
-                  class="u-input u-input-rectangle u-white" required>
+                  class="u-input u-input-rectangle u-white" value="{{user}}" readonly required>
               </div>
               <div class="u-form-email u-form-group u-form-group-4">
                 <label for="email-5a14" class="u-label" wfd-invisible="true">Correo electrónico</label>
                 <input type="email" placeholder="Escribe tu correo electrónico" id="email-5a14" name="email"
-                  class="u-input u-input-rectangle u-white" required>
+                  class="u-input u-input-rectangle u-white" value="{{email}}" required>
               </div>
               <!-- <div class="u-form-group u-form-message u-form-group-5">
                 <label for="message-5a14" class="u-label" wfd-invisible="true">Biografía</label>
@@ -136,9 +136,10 @@
                   class="u-input u-input-rectangle u-white" ></textarea>
               </div> -->
               <div class="u-align-center u-form-group u-form-submit u-form-group-6">
-                <a href="#"
-                  class="u-border-2 u-border-black u-btn u-btn-round u-btn-submit u-button-style u-hover-black u-none u-radius-3 u-text-black u-text-hover-white u-btn-1">Guardar</a>
-                <input type="submit" value="submit" class="u-form-control-hidden" wfd-invisible="true">
+                <!-- <a href="/Templates/pantalla1GestionPerfil.html"
+                  class="u-border-2 u-border-black u-btn u-btn-round u-btn-submit u-button-style u-hover-black u-none u-radius-3 u-text-black u-text-hover-white u-btn-1">Guardar</a> -->
+                  <button type="submit" value="submit" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-palette-4-dark-3 u-radius-25 u-btn-1">Guardar</button>
+                  <input type="submit" value="submit" class="u-form-control-hidden" wfd-invisible="true">
               </div>
               <!-- <div class="u-form-send-message u-form-send-success" wfd-invisible="true"> Thank you! Your data has been changed. </div>
               <div class="u-form-send-error u-form-send-message" wfd-invisible="true"> Unable to send your message.

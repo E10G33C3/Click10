@@ -82,17 +82,20 @@ def editar():
     if user == "unknown":
         return redirect(url_for('inicio'))
     
+    consulta = sql_consultar_datos_usuario('click10.db', user)
+    print(consulta)
+    p = Persona(consulta[0][1], consulta[0][2], consulta[0][6], consulta[0][8], consulta[0][9], consulta[0][3], consulta[0][4], consulta[0][5], consulta[0][7])
+    
     if request.method=='POST':
         # Handle POST Request here
         p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], 'contrasena', False, False,False, "URL")
-       
         try:
             editar_datos('click10.db', p.nombre, p.apellido, p.email, p.nombre_de_usuario)
             return render_template("pantallaPerfilUsuario.html")
         except IntegrityError:
             return render_template("pantalla1GestionPerfil.html")
         
-    return render_template("pantalla1GestionPerfil.html", user=user)
+    return render_template("pantalla1GestionPerfil.html", user=user, nombre=p.nombre, apellido=p.apellido, email=p.email )
 # @app.route('/Perfil/<string:nombreDeUsuario>/',methods=['GET','POST'])
 # @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
 # @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
