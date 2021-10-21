@@ -55,16 +55,8 @@ def eliminar_datos(bd, nombreDeUsuario, email):
     con.commit()
     con.close()
 
-# def eliminar_datos(bd, nombreDeUsuario, email):
-#     strsql = "delete from persona where nombreDeUsuario = '{0}';".format(nombreDeUsuario, email)
-#     con = sql_connection(bd)
-#     cursor_obj = con.cursor()
-#     cursor_obj.execute(strsql)
-#     con.commit()
-#     con.close()
-
-def cambiar_contrasena(bd, contrasenaActual, contrasenaNueva, confirmarContrasena, nombreDeUsuario):
-    strsql = "update persona set contrasena='{0}' where nombreDeUsuario='{1}';".format(contrasenaActual,contrasenaNueva,confirmarContrasena, nombreDeUsuario)
+def cambiar_contrasena(bd, contrasena, nombreDeUsuario):
+    strsql = "update persona set contrasena='{0}' where nombreDeUsuario='{1}';".format(contrasena, nombreDeUsuario)
     con = sql_connection(bd)
     cursor_obj = con.cursor()
     cursor_obj.execute(strsql)
