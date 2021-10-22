@@ -236,9 +236,16 @@ def pantallaGestionPublicaciones():
     lista = consulta_de_imagenes_general('click10.db')
     print("La lista es --> ")
     print(lista)
+    # disponer lista para LIFO
+    lista.reverse()
+    
     
     # crear variable de depliegue de imagenes
     elements = show_image(BUCKET, lista)
+    # disponer elements para LIFO
+    
+    
+    # lista.reverse()
     
     # manejar consultas POST
     if request.method=='POST':
@@ -321,6 +328,7 @@ def upload():
         descripcion = request.form['descripcion']
         f.save(os.path.join(UPLOAD_FOLDER, secure_filename(f.filename)))
         upload_file(f"{f.filename}", BUCKET, user, descripcion)
+        # os.remove(f.filename)
         return redirect("/Templates/pantallaGestionPublicaciones.html")
     
 @app.route("/pics")

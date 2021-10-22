@@ -2,6 +2,7 @@ import boto3
 import hashlib
 from metodos import obtener_id_usuario, crear_nueva_publicacion
 import datetime
+import random
 
 # funciones para la conexion con el servicio de alojamiento en la nube S3 de AWS
 
@@ -9,7 +10,7 @@ def upload_file(file_name, bucket, user, descripcion):
     
     # crear nombre cifrado del objeto
     object_name = hashlib.sha256(file_name.encode()).hexdigest() 
-    object_name = f"uploads/{object_name}" + file_name[-4:]
+    object_name = f"uploads/{object_name}" + str(random.randint(0, 1000)) + file_name[-4:]
     # print(object_name)
     
     #genarar timestamp
@@ -22,6 +23,7 @@ def upload_file(file_name, bucket, user, descripcion):
     #subir archivo a la nube
     s3_client = boto3.client('s3')
     response = s3_client.upload_file(file_name, bucket, object_name)
+    
     # crear registro de la publicacion en la base de datos
     crear_nueva_publicacion('click10.db', obtener_id_usuario('click10.db', user), ts, f'{object_name}', descripcion)
  
