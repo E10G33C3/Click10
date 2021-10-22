@@ -10,4 +10,6 @@ class Persona ():
         self.usuarioActivo = usuarioActivo
         self.URL_fotoDePerfil = URL_fotoDePerfil
         
+
+        
         
