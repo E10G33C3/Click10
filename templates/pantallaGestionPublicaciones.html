@@ -56,7 +56,7 @@
   <div class="mainMargin"> </div>
 
   <div class="main">
-    {% for post in range (times)%}
+    {% for post in elements%}
     <div class="Publicacion">
       <div class="publicacionHeader">
         <div class="datosAutorPublicacion">
@@ -66,7 +66,7 @@
       </div>
       <div class="containerFotoPublicaacion">
         <img class="fotoPublicacion"
-          src="{{ url_for('static', filename='img/g51106213615207ce5ba6d5025a5896dbbbf5919bfde2f96bda29922ac15eeb7b807e5305ac9fecbdc9a74320907d19719417cee7eef78a76ea7794961cfbf955_1280.jpg') }}">
+          src= {{ post }}>
 
       </div>
       <p class="descripcionPublicacion">

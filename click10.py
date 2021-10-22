@@ -6,7 +6,7 @@ from flask import Flask,redirect,url_for, render_template, request , flash , ses
 from clases import Persona
 import sqlite3
 from sqlite3 import Error
-from metodos import editar_datos, eliminar_datos, sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario
+from metodos import editar_datos, eliminar_datos, sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario, consulta_de_imagenes_general
 from werkzeug.security import generate_password_hash, check_password_hash
 from s3_functions import upload_file, show_image
 from werkzeug.utils import secure_filename
@@ -230,11 +230,21 @@ def pantallaGestionPublicaciones():
     # Hacer algo si auth == 0
     if user == "unknown":
         return redirect(url_for('inicio'))
-    times = 10
+    
+    # crear variable lista de elementos
+    
+    lista = consulta_de_imagenes_general('click10.db')
+    print("La lista es --> ")
+    print(lista)
+    
+    # crear variable de depliegue de imagenes
+    elements = show_image(BUCKET, lista)
+    
+    # manejar consultas POST
     if request.method=='POST':
         # Handle POST Request here
         pass
-    return render_template("pantallaGestionPublicaciones.html", times=times, user=user)
+    return render_template("pantallaGestionPublicaciones.html", elements=elements, user=user)
 
 @app.route('/Templates/pantallaMensajes.html',methods=['GET','POST'])
 def pantallaMensajes():
@@ -314,7 +324,8 @@ def upload():
     
 @app.route("/pics")
 def list():
-    contents = show_image(BUCKET)
+    dummy = ["",""]
+    contents = show_image(BUCKET, dummy)
     return render_template('collection.html', contents=contents)
 
 
