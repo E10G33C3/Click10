@@ -84,3 +84,12 @@ def obtener_id_usuario(bd, usuario):
     registros_existentes = cursorObj.fetchall()
     return registros_existentes[0][0]
     
+# funcion para cargar las imagenes encontradas en la BDD
+def consulta_de_imagenes_general(bd):
+    strsql = "select URL_imagen from publicaciones;"
+    con = sql_connection(bd)
+    cursorObj = con.cursor()
+    cursorObj.execute(strsql)
+    registros_existentes = cursorObj.fetchall()
+    return registros_existentes
+    
