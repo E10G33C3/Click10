@@ -63,9 +63,9 @@ def cambiar_contrasena(bd, contrasena, nombreDeUsuario):
     con.commit()
     con.close()
     
-def crear_nueva_publicacion(bd, usuario, timestamp, ULR_imagen):
+def crear_nueva_publicacion(bd, usuario, timestamp, ULR_imagen, descripcion):
     #crear prepared statement
-    strsql = "insert into publicaciones (ID_usuario, timeStampImagenes, URL_imagen) values({0}, {1}, '{2}')".format(usuario, timestamp, ULR_imagen)
+    strsql = "insert into publicaciones (ID_usuario, timeStampImagenes, URL_imagen, descripcion ) values({0}, {1}, '{2}', '{3}')".format(usuario, timestamp, ULR_imagen,descripcion)
     #conexion
     con = sql_connection(bd)
     #variable para ejecutar queries
@@ -86,7 +86,7 @@ def obtener_id_usuario(bd, usuario):
     
 # funcion para cargar las imagenes encontradas en la BDD
 def consulta_de_imagenes_general(bd):
-    strsql = "select URL_imagen from publicaciones;"
+    strsql = "select publicaciones.URL_imagen, publicaciones.descripcion, persona.nombreDeUsuario from publicaciones INNER JOIN persona ON publicaciones.ID_usuario=persona.ID_usuario;"
     con = sql_connection(bd)
     cursorObj = con.cursor()
     cursorObj.execute(strsql)

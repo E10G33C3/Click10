@@ -244,7 +244,7 @@ def pantallaGestionPublicaciones():
     if request.method=='POST':
         # Handle POST Request here
         pass
-    return render_template("pantallaGestionPublicaciones.html", elements=elements, user=user)
+    return render_template("pantallaGestionPublicaciones.html", elements=elements, user=user, lista=lista)
 
 @app.route('/Templates/pantallaMensajes.html',methods=['GET','POST'])
 def pantallaMensajes():
@@ -318,8 +318,9 @@ def upload():
     
     if request.method == "POST":
         f = request.files['file']
+        descripcion = request.form['descripcion']
         f.save(os.path.join(UPLOAD_FOLDER, secure_filename(f.filename)))
-        upload_file(f"{f.filename}", BUCKET, user)
+        upload_file(f"{f.filename}", BUCKET, user, descripcion)
         return redirect("/Templates/pantallaGestionPublicaciones.html")
     
 @app.route("/pics")
