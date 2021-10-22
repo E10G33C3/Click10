@@ -1,12 +1,15 @@
 from os import error
+import os
 import re
 from sqlite3.dbapi2 import IntegrityError
-from flask import Flask,redirect,url_for, render_template, request , flash , session
+from flask import Flask,redirect,url_for, render_template, request , flash , session, send_file
 from clases import Persona
 import sqlite3
 from sqlite3 import Error
 from metodos import editar_datos, eliminar_datos, sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario
 from werkzeug.security import generate_password_hash, check_password_hash
+from s3_functions import upload_file, show_image
+from werkzeug.utils import secure_filename
 
 
 app=Flask(__name__)
@@ -16,6 +19,9 @@ app.secret_key = "click10"
 app.before_request
 def session_management():
     session.permanent = True
+    
+UPLOAD_FOLDER = "uploads"
+BUCKET = "click10"
 
 @app.route("/")
 @app.route('/Templates/pantallaInicio',methods=['GET','POST'])
@@ -271,6 +277,48 @@ def logout():
   session["auth"] = 0
   return redirect(url_for('inicio'))
 
+@app.route("/Templates/cargaDeImagenes.html", methods=['POST'])
+def cargaDeImagenes():
+        # sesión
+    try:
+        user = session["user"]
+        auth = session["auth"]
+    except:
+        user = "unknown"
+        auth = 0
+    if user == "unknown":
+        return redirect(url_for('inicio'))
+    
+    if request.method=='POST':
+        # Handle POST Request here
+        return render_template("cargaDeImagenes.html")
+    return render_template("cargaDeImagenes.html")
+
+@app.route("/upload", methods=['POST'])
+def upload():
+        # sesión
+    try:
+        user = session["user"]
+        auth = session["auth"]
+    except:
+        user = "unknown"
+        auth = 0
+    if user == "unknown":
+        return redirect(url_for('inicio'))
+    
+    if request.method == "POST":
+        f = request.files['file']
+        f.save(os.path.join(UPLOAD_FOLDER, secure_filename(f.filename)))
+        upload_file(f"{f.filename}", BUCKET, user)
+        return redirect("/Templates/pantallaGestionPublicaciones.html")
+    
+@app.route("/pics")
+def list():
+    contents = show_image(BUCKET)
+    return render_template('collection.html', contents=contents)
+
+
 if __name__ == '__main__':
     #DEBUG is SET to TRUE. CHANGE FOR PROD
     app.run(port=5000,debug=True)
+    

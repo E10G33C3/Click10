@@ -62,3 +62,25 @@ def cambiar_contrasena(bd, contrasena, nombreDeUsuario):
     cursor_obj.execute(strsql)
     con.commit()
     con.close()
+    
+def crear_nueva_publicacion(bd, usuario, timestamp, ULR_imagen):
+    #crear prepared statement
+    strsql = "insert into publicaciones (ID_usuario, timeStampImagenes, URL_imagen) values({0}, {1}, '{2}')".format(usuario, timestamp, ULR_imagen)
+    #conexion
+    con = sql_connection(bd)
+    #variable para ejecutar queries
+    cursor_obj = con.cursor()
+    #ejecutar query
+    cursor_obj.execute(strsql)
+    #actualizar base de datos
+    con.commit()
+    con.close()
+
+def obtener_id_usuario(bd, usuario):
+    strsql = "select ID_usuario from persona where nombreDeUsuario='{0}';".format(usuario)
+    con = sql_connection(bd)
+    cursorObj = con.cursor()
+    cursorObj.execute(strsql)
+    registros_existentes = cursorObj.fetchall()
+    return registros_existentes[0][0]
+    

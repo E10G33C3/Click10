@@ -21,6 +21,10 @@
   <meta name="theme-color" content="#1961ee">
   <meta property="og:title" content="pantallaGestionPublicaciones">
   <meta property="og:type" content="website">
+
+  <script>  
+
+  </script>
 </head>
 
 <body>
@@ -41,9 +45,12 @@
         <img src="{{ url_for('static', filename='/img/picMan.jpg')}}" class="imagenUsuario" style="border-radius: 50%;">
       </a>
     </div>
-    <a class="bigAddButton">
-      <img src="{{ url_for('static', filename='/img/addButton.png')}}" class="bigAddButtonImage" alt="">
-    </a>
+    <form class="bigAddButton" method="POST" action="/Templates/cargaDeImagenes.html">
+    
+      <input type="image"  class="bigAddButtonImage" src="{{ url_for('static', filename='/img/addButton.png')}}" value="" >
+    </form>
+    <!-- <button class="bigAddButton" onclick="window.open('cargaDeImagenes.html', _blank, 'width=400, height=300')" style="color: cyan;">+</button> -->
+
   </header>
 
   <div class="mainMargin"> </div>
