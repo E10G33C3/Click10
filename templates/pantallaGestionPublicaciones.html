@@ -56,22 +56,21 @@
   <div class="mainMargin"> </div>
 
   <div class="main">
-    {% for post in elements%}
+    {% for i in range(elements|length)%}
     <div class="Publicacion">
       <div class="publicacionHeader">
         <div class="datosAutorPublicacion">
           <img src="{{ url_for('static', filename='/img/picMan.jpg')}}" style="border-radius: 50%;">
-          <p class="nombreAutor">@LoremIpsum</p>
+          <p class="nombreAutor">@{{ lista[i][2]}}</p>
         </div>
       </div>
       <div class="containerFotoPublicaacion">
         <img class="fotoPublicacion"
-          src= {{ post }}>
+          src= {{ elements[i] }}>
 
       </div>
       <p class="descripcionPublicacion">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque commodi quas fuga dolorem odit ea ad delectus
-        nemo, quidem, cupiditate molestiae est vero dolor ipsam doloremque. Maiores amet perferendis eligendi?
+        {{ lista[i][1]}}
       </p>
       <div class="calificacionesPublicacion">
         <button class="botonAdd"> <img src="{{ url_for('static', filename='/img/addButton.png')}}" alt=""
