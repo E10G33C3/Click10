@@ -47,8 +47,8 @@ def editar_datos(bd, nombre, apellido, email, nombre_de_usuario):
     con.close()
     
 
-def eliminar_datos(bd, nombreDeUsuario, email):
-    strsql = "update persona set usuarioActivo=0 where nombreDeUsuario='{0}';".format(nombreDeUsuario, email)
+def eliminar_datos(bd, nombreDeUsuario):
+    strsql = "update persona set usuarioActivo=0 where nombreDeUsuario='{0}';".format(nombreDeUsuario)
     con = sql_connection(bd)
     cursor_obj = con.cursor()
     cursor_obj.execute(strsql)
