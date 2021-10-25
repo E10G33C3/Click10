@@ -6,7 +6,7 @@ from flask import Flask,redirect,url_for, render_template, request , flash , ses
 from clases import Persona
 import sqlite3
 from sqlite3 import Error
-from metodos import buscar_comentarios, editar_datos, eliminar_comentario, eliminar_datos, sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario, consulta_de_imagenes_general, crearComentario, eliminar_publicacion
+from metodos import buscar_comentarios, editar_datos, eliminar_comentario, eliminar_datos, sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario, consulta_de_imagenes_general, crearComentario, eliminar_publicacion, busqueda_de_usuarios
 from werkzeug.security import generate_password_hash, check_password_hash
 from s3_functions import upload_file, show_image
 from werkzeug.utils import secure_filename
@@ -64,7 +64,7 @@ def contrasena():
 def registro():
     if request.method=='POST':
         # Handle POST Request here
-        p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], request.form['contrasena'], False, False,False, "URL")
+        p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], request.form['contrasena'], False, False,False, "img/picMan.jpg")
         p.contrasena = generate_password_hash(p.contrasena)
         try:
             crear_nueva_persona('click10.db', p.nombre, p.apellido, p.nombre_de_usuario, p.email, p.contrasena)
@@ -271,7 +271,11 @@ def pantallaGestionPublicaciones():
 def pantallaMensajes():
     if request.method=='POST':
         # Handle POST Request here
-        pass
+        busqueda = request.form['q']
+        resultados = busqueda_de_usuarios(busqueda)
+        print(resultados)
+        
+        return render_template("pantallaMensajes.html", resultados=resultados)
     return render_template("pantallaMensajes.html")
 
 @app.route('/Templates/pantallaPerfilUsuario.html',methods=['GET','POST'])
