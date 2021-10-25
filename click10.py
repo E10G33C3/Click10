@@ -147,7 +147,7 @@ def eliminar():
         p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], request.form['email'], 'contrasena', False, False,False, "URL")
        
         try:
-            eliminar_datos('click10.db', p.nombre_de_usuario, p.email)
+            eliminar_datos('click10.db', p.nombre_de_usuario)
             return render_template("pantallaPerfilUsuario.html")
         except IntegrityError:
 
