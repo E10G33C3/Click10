@@ -269,13 +269,24 @@ def pantallaGestionPublicaciones():
 
 @app.route('/Templates/pantallaMensajes.html',methods=['GET','POST'])
 def pantallaMensajes():
+    
+    try:
+        user = session["user"]
+        auth = session["auth"]
+    except:
+        user = "unknown"
+        auth = 0
+    if user == "unknown":
+        return redirect(url_for('inicio'))
+    
+        
     if request.method=='POST':
         # Handle POST Request here
         busqueda = request.form['q']
         resultados = busqueda_de_usuarios(busqueda)
         print(resultados)
         
-        return render_template("pantallaMensajes.html", resultados=resultados)
+        return render_template("pantallaMensajes.html", resultados=resultados, user=user)
     return render_template("pantallaMensajes.html")
 
 @app.route('/Templates/pantallaPerfilUsuario.html',methods=['GET','POST'])

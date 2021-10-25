@@ -632,24 +632,26 @@ Copiar esto
 
 
             <div class="seccion-lista-usuarios">
-                
-            {% for item in resultados %}
-            <button onclick="updateUser(item[0], item[1])"> 
-                <div class="usuario">
-                    <div class="avatar">
-                        <img src="{{ url_for('static', filename='img/picMan.jpg') }}" alt="img">
-                        <span class="estado-usuario enlinea"></span>
-                    </div>
-                    <div class="cuerpo">
-                        <span>@{{item[0]}}</span>
-                        <span>detalles de mensaje</span>
-                    </div>
-                    <span class="notificacion">
-                        3
-                    </span>
+
+                {% for item in resultados %}
+                {% if user != item[0] %}
+                <button onclick="updateUser(item[0], item[1])">
+                    <div class="usuario">
+                        <div class="avatar">
+                            <img src="{{ url_for('static', filename='img/picMan.jpg') }}" alt="img">
+                            <span class="estado-usuario enlinea"></span>
+                        </div>
+                        <div class="cuerpo">
+                            <span>@{{item[0]}}</span>
+                            <span>detalles de mensaje</span>
+                        </div>
+                        <span class="notificacion">
+                            3
+                        </span>
                 </button>
-            </a>
-            {% endfor %}    
+                </a>
+                {% endif %}
+                {% endfor %}
                 <!-- <div class="usuario">
                     <div class="avatar">
                         <img src="{{ url_for('static', filename='img/2.jpg') }}" alt="img">
