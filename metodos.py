@@ -136,3 +136,14 @@ def eliminar_publicacion(id_publicacion):
     #actualizar base de datos
     con.commit()
     con.close()
+    
+    
+def busqueda_de_usuarios(busqueda):
+    strsql = "SELECT nombreDeUsuario, URL_fotoDePerfil FROM persona WHERE nombre LIKE  '%{0}%' OR apellido LIKE '%{0}%' OR nombreDeUsuario LIKE '%{0}%' OR email LIKE '%{0}%';".format(busqueda)
+    con = sql_connection('click10.db')
+    cursorObj = con.cursor()
+    cursorObj.execute(strsql)
+    registros_existentes = cursorObj.fetchall()
+    return registros_existentes
+
+# print(busqueda_de_usuarios('cam'))
