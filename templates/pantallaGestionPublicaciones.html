@@ -9,8 +9,8 @@
   <meta name="page_type" content="np-template-header-footer-from-plugin">
   <title>Click10 Publicaciones</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/pantallaGestionPublicaciones.css') }}" media="screen">
-  <script class="u-script" type="text/javascript" src="jquery-1.9.1.min.js" defer=""></script>
-  <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+  <!-- <script class="u-script" type="text/javascript" src="jquery-1.9.1.min.js" defer=""></script>
+  <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script> -->
   <meta name="generator" content="Nicepage 3.27.1, nicepage.com">
   <link id="u-theme-google-font" rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
@@ -22,7 +22,7 @@
   <meta property="og:title" content="pantallaGestionPublicaciones">
   <meta property="og:type" content="website">
 
-  <script>  
+  <script>
 
   </script>
 </head>
@@ -30,7 +30,8 @@
 <body>
   <header class="">
     <div id="logoDiv">
-      <a href="/Templates/pantallaGestionPublicaciones.html" class="link" data-image-width="149" data-image-height="148" title=".">
+      <a href="/Templates/pantallaGestionPublicaciones.html" class="link" data-image-width="149" data-image-height="148"
+        title=".">
         <img src="{{ url_for('static', filename='/img/LogoSolo_150.png')}}" class="logoImagen">
       </a>
       <h1 class="textoEncabezado">
@@ -38,7 +39,8 @@
       </h1>
     </div>
     <div class="datosUsuario">
-      <a href="/Templates/pantallaPerfilUsuario.html" class="link" data-image-width="300" data-image-height="300" title=".">
+      <a href="/Templates/pantallaPerfilUsuario.html" class="link" data-image-width="300" data-image-height="300"
+        title=".">
         <p class="nombreUsuario">
           <a class="link" href="/Templates/pantallaPerfilUsuario.html" id="nombreUsuario">@{{user}}</a>
         </p>
@@ -46,8 +48,9 @@
       </a>
     </div>
     <form class="bigAddButton" method="POST" action="/Templates/cargaDeImagenes.html">
-    
-      <input type="image"  class="bigAddButtonImage" src="{{ url_for('static', filename='/img/addButton.png')}}" value="" >
+
+      <input type="image" class="bigAddButtonImage" src="{{ url_for('static', filename='/img/addButton.png')}}"
+        value="">
     </form>
     <!-- <button class="bigAddButton" onclick="window.open('cargaDeImagenes.html', _blank, 'width=400, height=300')" style="color: cyan;">+</button> -->
 
@@ -65,13 +68,23 @@
         </div>
       </div>
       <div class="containerFotoPublicaacion">
-        <img class="fotoPublicacion"
-          src= {{ elements[i] }}>
+        <img class="fotoPublicacion" src={{ elements[i] }}>
 
       </div>
       <p class="descripcionPublicacion">
         {{ lista[i][1]}}
       </p>
+
+      <!-- Si el usuario es el autor de la publicacion, mostrar opcion para borrar publicacion -->
+      {% if user == lista[i][2] %}
+
+      <form action="/Templates/eliminarPublicacion.html" method="post" class="formEliminarPublicacion">
+      <input type="text" name="publicacion_a_eliminar" class="id_comentario" value="{{lista[i][3]}}" hidden>
+      <input type="submit" value="Eliminar foto" class="btnEliminarComentario" id="btnEliminarPublicacion">
+
+      </form>
+      {% endif %}
+
       <!-- <div class="calificacionesPublicacion">
         <button class="botonAdd"> <img src="{{ url_for('static', filename='/img/addButton.png')}}" alt=""
             class="addButtonImage"></button>
@@ -79,11 +92,21 @@
         <span class="emojiCalificacion">&#128525;</span>
         <p class="ConteoCalificacion"> 3</p>
       </div> -->
+
+
       <div class="comentarios">
+        {% for item in lista_comentarios[i]%}
         <div class="comentario">
-          <p class="nombreDeComentarista">@ComentIpsum:</p>
-          <p class="textoComentario">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, ducimus.</p>
+          <p class="nombreDeComentarista">@{{item[1]}}:</p>
+          <p class="textoComentario">{{item[0]}}</p>
+          {% if user == item[1]%}
+          <form action="/Templates/eliminarComentario.html" method="post" class="formEliminarComentario">
+          <input type="text" name="comentario_a_eliminar" class="id_comentario" value="{{item[3]}}" hidden>
+          <input type="submit" value="Eliminar comentario" class="btnEliminarComentario" id="btnEliminarComentario">
+        </form>
+          {% endif %}
         </div>
+        {% endfor %}
         <!-- <div class="calificacionesComentario">
 
           <button class="botonAdd calificacionComentario" > <img src="{{ url_for('static', filename='/img/addButton.png')}}" alt=""
@@ -94,8 +117,11 @@
         </div> -->
 
       </div>
-      <form action="#" class="crearComentario">
-        <input type="text" name="comentario" class="escribirComentario">
+      <form action="/Templates/pantallaGestionPublicaciones.html" method="post" class="crearComentario">
+        <input type="hidden" name="comentarista" id="comentarista" value="{{user}}">
+        <input type="hidden" name="publicacion" id="publicacion" value="{{ lista[i][3] }}">
+        <input type="text" name="escribirComentario" class="escribirComentario" id="escribirComentario"
+          title="Para publicar un comentrio, escribelo aquí." required>
         <button type="submit" class="enviarComentario">Comentar</button>
       </form>
 

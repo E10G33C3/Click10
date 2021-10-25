@@ -1,3 +1,4 @@
+import datetime
 import sqlite3
 from sqlite3 import Error
 from sqlite3.dbapi2 import Cursor
@@ -86,10 +87,52 @@ def obtener_id_usuario(bd, usuario):
     
 # funcion para cargar las imagenes encontradas en la BDD
 def consulta_de_imagenes_general(bd):
-    strsql = "select publicaciones.URL_imagen, publicaciones.descripcion, persona.nombreDeUsuario from publicaciones INNER JOIN persona ON publicaciones.ID_usuario=persona.ID_usuario;"
+    strsql = "select publicaciones.URL_imagen, publicaciones.descripcion, persona.nombreDeUsuario, publicaciones.ID_publicacion from publicaciones INNER JOIN persona ON publicaciones.ID_usuario=persona.ID_usuario;"
     con = sql_connection(bd)
     cursorObj = con.cursor()
     cursorObj.execute(strsql)
     registros_existentes = cursorObj.fetchall()
     return registros_existentes
     
+def crearComentario(ID_publicacion, user, comentario ):
+    ID_usuario_comentante = obtener_id_usuario('click10.db', user)
+    #crear prepared statement
+    ts = datetime.datetime.now().timestamp()
+    strsql = "insert into comentarios (timeStampComentario, ID_publicacion, ID_usuario_comentante, comentario) values({0}, {1}, {2}, '{3}')".format(ts, ID_publicacion, ID_usuario_comentante,comentario)
+    #conexion
+    con = sql_connection('click10.db')
+    #variable para ejecutar queries
+    cursor_obj = con.cursor()
+    #ejecutar query
+    cursor_obj.execute(strsql)
+    #actualizar base de datos
+    con.commit()
+    con.close()
+    
+def buscar_comentarios(ID_publicacion):
+    
+    strsql = "select comentarios.comentario, persona.nombreDeUsuario, comentarios.ID_publicacion, comentarios.ID_comentario from comentarios INNER JOIN persona ON  ID_usuario_comentante=ID_usuario where ID_publicacion={}".format(ID_publicacion)
+    con = sql_connection('click10.db')
+    cursorObj = con.cursor()
+    cursorObj.execute(strsql)
+    registros_existentes = cursorObj.fetchall()
+    return registros_existentes
+
+def eliminar_comentario(ID_comentario):
+    strsql = "DELETE FROM comentarios WHERE ID_comentario={}".format(ID_comentario)
+    con = sql_connection('click10.db')
+    cursorObj = con.cursor()
+    cursorObj.execute(strsql)
+    #actualizar base de datos
+    con.commit()
+    con.close() 
+    
+
+def eliminar_publicacion(id_publicacion):
+    strsql = "DELETE FROM publicaciones WHERE ID_publicacion={}".format(id_publicacion)
+    con = sql_connection('click10.db')
+    cursorObj = con.cursor()
+    cursorObj.execute(strsql)
+    #actualizar base de datos
+    con.commit()
+    con.close()
