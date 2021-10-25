@@ -328,6 +328,10 @@ def cargaDeImagenes():
 @app.route("/upload", methods=['POST'])
 def upload():
         # sesión
+    dir = 'uploads/'
+    for f in os.listdir(dir):
+        os.remove(os.path.join(dir, f))
+        time.sleep(2)
     try:
         user = session["user"]
         auth = session["auth"]
