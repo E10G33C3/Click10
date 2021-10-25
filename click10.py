@@ -6,10 +6,11 @@ from flask import Flask,redirect,url_for, render_template, request , flash , ses
 from clases import Persona
 import sqlite3
 from sqlite3 import Error
-from metodos import editar_datos, eliminar_datos, sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario, consulta_de_imagenes_general
+from metodos import buscar_comentarios, editar_datos, eliminar_comentario, eliminar_datos, sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario, consulta_de_imagenes_general, crearComentario, eliminar_publicacion
 from werkzeug.security import generate_password_hash, check_password_hash
 from s3_functions import upload_file, show_image
 from werkzeug.utils import secure_filename
+import time
 
 
 app=Flask(__name__)
@@ -74,6 +75,8 @@ def registro():
         except IntegrityError:
 
             return render_template("pantallaRegistro.html")
+        
+            
     return render_template("pantallaRegistro.html")
 
 @app.route('/Templates/pantalla1GestionPerfil.html',methods=['GET','POST'])
@@ -234,24 +237,35 @@ def pantallaGestionPublicaciones():
     # crear variable lista de elementos
     
     lista = consulta_de_imagenes_general('click10.db')
+    lista_comentarios = []
+    for item in lista:
+        lista_comentarios.append(buscar_comentarios(item[3]))
+        # lista.append(list(item))
+
     print("La lista es --> ")
     print(lista)
+
     # disponer lista para LIFO
     lista.reverse()
+    lista_comentarios.reverse()
     
     
     # crear variable de depliegue de imagenes
     elements = show_image(BUCKET, lista)
     # disponer elements para LIFO
     
-    
-    # lista.reverse()
+
+
     
     # manejar consultas POST
     if request.method=='POST':
         # Handle POST Request here
+        
+        # crear un nuevo comentario en la tabla si se llena un comentario en un formulario
+        crearComentario(request.form['publicacion'], request.form['comentarista'],request.form['escribirComentario'])
+    
         pass
-    return render_template("pantallaGestionPublicaciones.html", elements=elements, user=user, lista=lista)
+    return render_template("pantallaGestionPublicaciones.html", elements=elements, user=user, lista=lista, lista_comentarios=lista_comentarios)
 
 @app.route('/Templates/pantallaMensajes.html',methods=['GET','POST'])
 def pantallaMensajes():
@@ -337,6 +351,25 @@ def list():
     contents = show_image(BUCKET, dummy)
     return render_template('collection.html', contents=contents)
 
+@app.route("/Templates/eliminarPublicacion.html", methods=['POST'])
+def eliminarPublicacion():
+    if request.method == "POST":
+        publicacion_a_elimiminar = request.form['publicacion_a_eliminar']
+        eliminar_publicacion(publicacion_a_elimiminar)
+        time.sleep(1)
+        
+        return redirect ("/Templates/pantallaGestionPublicaciones.html")
+    return "..."
+
+@app.route("/Templates/eliminarComentario.html", methods=['POST'])
+def eliminarComentario():
+    if request.method == "POST":
+        comentario_a_elimiminar = request.form['comentario_a_eliminar']
+        eliminar_comentario(comentario_a_elimiminar)
+        time.sleep(1)
+        
+        return redirect ("/Templates/pantallaGestionPublicaciones.html")
+    return "..."
 
 if __name__ == '__main__':
     #DEBUG is SET to TRUE. CHANGE FOR PROD
