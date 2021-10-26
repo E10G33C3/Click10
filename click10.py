@@ -64,7 +64,7 @@ def contrasena():
 def registro():
     if request.method=='POST':
         # Handle POST Request here
-        p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], request.form['contrasena'], False, False,False, "img/picMan.jpg", "")
+        p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], request.form['contrasena'], False, False,False, "uploads/3ebd143ecb03c556219e59fb4bada120278f872e7dfdad4d04bcc74c82cd3575412.jpg", "")
         p.contrasena = generate_password_hash(p.contrasena)
         try:
             crear_nueva_persona('click10.db', p.nombre, p.apellido, p.nombre_de_usuario, p.email, p.contrasena)
