@@ -20,7 +20,7 @@ def sql_consultar_datos_existentes(bd, nombreDeUsuario):
 
 def crear_nueva_persona(bd, nombre, apellido, nombreDeUsuario, email, contrasena):
     #crear prepared statement
-    strsql = "insert into persona (nombre, apellido, permisoAdmin, permisoSuperadmin, usuarioActivo, nombreDeUsuario, URL_fotoDePerfil, email, contrasena) values('{0}', '{1}', {2}, {3}, {4}, '{5}', '{6}', '{7}', '{8}')".format(nombre, apellido, 'FALSE', 'FALSE', 'TRUE', nombreDeUsuario, 'uploads/3ebd143ecb03c556219e59fb4bada120278f872e7dfdad4d04bcc74c82cd3575412.jpg', email, contrasena)
+    strsql = "insert into persona (nombre, apellido, permisoAdmin, permisoSuperadmin, usuarioActivo, nombreDeUsuario, URL_fotoDePerfil, email, contrasena, biografia) values('{0}', '{1}', {2}, {3}, {4}, '{5}', '{6}', '{7}', '{8}', 'Edita tu perfil para agregar tu biografía.')".format(nombre, apellido, 'FALSE', 'FALSE', 'TRUE', nombreDeUsuario, 'uploads/3ebd143ecb03c556219e59fb4bada120278f872e7dfdad4d04bcc74c82cd3575412.jpg', email, contrasena)
     #conexion
     con = sql_connection(bd)
     #variable para ejecutar queries
