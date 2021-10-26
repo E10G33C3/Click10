@@ -120,16 +120,23 @@
                 <input type="text" placeholder="Escribe tu apellido" id="name-f12a" name="apellido"
                   class="u-input u-input-rectangle u-white" required value="{{apellido}}">
               </div>
-              <div class="u-form-group u-form-name u-form-group-3">
-                <label for="name-e3f7" class="u-label">Usuario</label>
-                <input type="text" placeholder="Escribe tu nombre de usuario" id="name-e3f7" name="nombreDeUsuario"
-                  class="u-input u-input-rectangle u-white" value="{{user}}" readonly required>
-              </div>
+              <!-- <div class="u-form-group u-form-name u-form-group-3"> -->
+                <!-- <label for="name-e3f7" class="u-label">Usuario</label> -->
+                <input type="hidden" placeholder="Escribe tu nombre de usuario" id="name-e3f7" name="nombreDeUsuario"
+                  class="u-input u-input-rectangle u-white" value="{{user}}" readonly required >
+              <!-- </div> -->
               <div class="u-form-email u-form-group u-form-group-4">
                 <label for="email-5a14" class="u-label" wfd-invisible="true">Correo electrónico</label>
                 <input type="email" placeholder="Escribe tu correo electrónico" id="email-5a14" name="email"
                   class="u-input u-input-rectangle u-white" value="{{email}}" required>
               </div>
+
+              <div class="u-form-group u-form-name u-form-group-3">
+                <label for="biografia" class="u-label" wfd-invisible="true">Biografía</label><br>
+                <textarea name="biografia" class="u-input u-input-rectangle u-white" id="biografia" cols="45" rows="5" placeholder="Escribe algo sobre ti." style="color: black;" >{{biografia}}</textarea>
+                
+              </div>
+
               <!-- <div class="u-form-group u-form-message u-form-group-5">
                 <label for="message-5a14" class="u-label" wfd-invisible="true">Biografía</label>
                 <textarea placeholder="Escribe algo sobre tí." rows="4" cols="50" id="message-5a14" name="message"

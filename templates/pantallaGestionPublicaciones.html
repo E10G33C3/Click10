@@ -44,7 +44,7 @@
         <p class="nombreUsuario">
           <a class="link" href="/Templates/pantallaPerfilUsuario.html" id="nombreUsuario">@{{user}}</a>
         </p>
-        <img src="{{ url_for('static', filename='/img/picMan.jpg')}}" class="imagenUsuario" style="border-radius: 50%;">
+        <img src={{ foto_man_o_nena }} class="imagenUsuario" style="width:75px; height:75px; border-radius: 50%;">
       </a>
     </div>
     <form class="bigAddButton" method="POST" action="/Templates/cargaDeImagenes.html">

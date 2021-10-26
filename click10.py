@@ -6,9 +6,9 @@ from flask import Flask,redirect,url_for, render_template, request , flash , ses
 from clases import Persona
 import sqlite3
 from sqlite3 import Error
-from metodos import buscar_comentarios, editar_datos, eliminar_comentario, eliminar_datos, sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario, consulta_de_imagenes_general, crearComentario, eliminar_publicacion, busqueda_de_usuarios
+from metodos import buscar_comentarios, editar_datos, eliminar_comentario, eliminar_datos, sql_consultar_datos_existentes, crear_nueva_persona, sql_consultar_datos_usuario, consulta_de_imagenes_general, crearComentario, eliminar_publicacion, busqueda_de_usuarios, buscar_foto_perfil
 from werkzeug.security import generate_password_hash, check_password_hash
-from s3_functions import upload_file, show_image
+from s3_functions import upload_file, show_image, upload_file_foto_perfil, show_image_perfil
 from werkzeug.utils import secure_filename
 import time
 
@@ -29,7 +29,7 @@ BUCKET = "click10"
 def inicio():
     if request.method=='POST':
         # Handle POST Request here
-        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'], False, False, False, "url")
+        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'], False, False, False, "url", "txt")
 
         # 
         usuario_encontrado = sql_consultar_datos_existentes('click10.db', p.nombre_de_usuario)
@@ -64,7 +64,7 @@ def contrasena():
 def registro():
     if request.method=='POST':
         # Handle POST Request here
-        p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], request.form['contrasena'], False, False,False, "img/picMan.jpg")
+        p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], request.form['contrasena'], False, False,False, "img/picMan.jpg", "")
         p.contrasena = generate_password_hash(p.contrasena)
         try:
             crear_nueva_persona('click10.db', p.nombre, p.apellido, p.nombre_de_usuario, p.email, p.contrasena)
@@ -93,18 +93,18 @@ def editar():
     
     consulta = sql_consultar_datos_usuario('click10.db', user)
     print(consulta)
-    p = Persona(consulta[0][1], consulta[0][2], consulta[0][6], consulta[0][8], consulta[0][9], consulta[0][3], consulta[0][4], consulta[0][5], consulta[0][7])
+    p = Persona(consulta[0][1], consulta[0][2], consulta[0][6], consulta[0][8], consulta[0][9], consulta[0][3], consulta[0][4], consulta[0][5], consulta[0][7], consulta[0][10])
     
     if request.method=='POST':
         # Handle POST Request here
-        p = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], 'contrasena', False, False,False, "URL")
+        pP = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], 'contrasena', False, False,False, "URL",request.form['biografia'] )
         try:
-            editar_datos('click10.db', p.nombre, p.apellido, p.email, p.nombre_de_usuario)
+            editar_datos('click10.db', pP.nombre, pP.apellido, pP.email, pP.nombre_de_usuario, pP.biografia)
             return render_template("pantallaPerfilUsuario.html")
         except IntegrityError:
             return render_template("pantalla1GestionPerfil.html")
         
-    return render_template("pantalla1GestionPerfil.html", user=user, nombre=p.nombre, apellido=p.apellido, email=p.email )
+    return render_template("pantalla1GestionPerfil.html", user=user, nombre=p.nombre, apellido=p.apellido, email=p.email, biografia=p.biografia )
 
 @app.route('/Templates/pantalla2GestionPerfil.html',methods=['GET','POST'])
 def cambiarContrasena():
@@ -120,7 +120,7 @@ def cambiarContrasena():
     
     if request.method=='POST':
         # Handle POST Request here
-        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'], False, False,False, "URL")
+        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'], False, False,False, "URL", "text")
         p.contrasena = generate_password_hash(p.contrasena)
         
         try:
@@ -147,7 +147,7 @@ def eliminar():
     
     if request.method=='POST':
         # Handle POST Request here
-        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], request.form['email'], 'contrasena', False, False,False, "URL")
+        p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], request.form['email'], 'contrasena', False, False,False, "URL", "txt")
        
         try:
             eliminar_datos('click10.db', p.nombre_de_usuario)
@@ -252,9 +252,9 @@ def pantallaGestionPublicaciones():
     
     # crear variable de depliegue de imagenes
     elements = show_image(BUCKET, lista)
-    # disponer elements para LIFO
     
-
+    # url foto de perfil
+    foto_man_o_nena = show_image_perfil(BUCKET, buscar_foto_perfil(user))
 
     
     # manejar consultas POST
@@ -265,7 +265,7 @@ def pantallaGestionPublicaciones():
         crearComentario(request.form['publicacion'], request.form['comentarista'],request.form['escribirComentario'])
     
         pass
-    return render_template("pantallaGestionPublicaciones.html", elements=elements, user=user, lista=lista, lista_comentarios=lista_comentarios)
+    return render_template("pantallaGestionPublicaciones.html", elements=elements, user=user, lista=lista, lista_comentarios=lista_comentarios, foto_man_o_nena=foto_man_o_nena)
 
 @app.route('/Templates/pantallaMensajes.html',methods=['GET','POST'])
 def pantallaMensajes():
@@ -278,8 +278,7 @@ def pantallaMensajes():
         auth = 0
     if user == "unknown":
         return redirect(url_for('inicio'))
-    
-        
+            
     if request.method=='POST':
         # Handle POST Request here
         busqueda = request.form['q']
@@ -307,7 +306,12 @@ def pantallaPerfilUsuario(user = None):
         return redirect(url_for('inicio'))
     # Por ejemplo cargar el template de login
     #return "<p>¡Hola %s!</p>" % user
-    return render_template("pantallaPerfilUsuario.html", user = user)
+    
+    consulta = sql_consultar_datos_usuario('click10.db', user)
+    # print(consulta)
+    p = Persona(consulta[0][1], consulta[0][2], consulta[0][6], consulta[0][8], consulta[0][9], consulta[0][3], consulta[0][4], consulta[0][5], consulta[0][7], consulta[0][10])
+    
+    return render_template("pantallaPerfilUsuario.html", user = user, biografia=p.biografia)
 
 @app.route('/Templates/pantallaVistaPublicacion.html',methods=['GET','POST'])
 def pantallaVistaPublicacion():
@@ -340,6 +344,23 @@ def cargaDeImagenes():
         return render_template("cargaDeImagenes.html")
     return render_template("cargaDeImagenes.html")
 
+@app.route("/Templates/cargaDeImagenDeUsuario.html", methods=['GET', 'POST'])
+def cargaDeImagenesUsuario():
+        # sesión
+    try:
+        user = session["user"]
+        auth = session["auth"]
+    except:
+        user = "unknown"
+        auth = 0
+    if user == "unknown":
+        return redirect(url_for('inicio'))
+    
+    if request.method=='POST':
+        # Handle POST Request here
+        return render_template("cargaDeImagenDeUsuario.html")
+    return render_template("cargaDeImagenDeUsuario.html")
+
 @app.route("/upload", methods=['POST'])
 def upload():
         # sesión
@@ -362,7 +383,34 @@ def upload():
         f.save(os.path.join(UPLOAD_FOLDER, secure_filename(f.filename)))
         upload_file(f"{f.filename}", BUCKET, user, descripcion)
         # os.remove(f.filename)
-        return redirect("/Templates/pantallaGestionPublicaciones.html")
+        return redirect("/Templates/pantallaPerfilUsuario.html")
+    
+@app.route("/uploadFotoPerfil", methods=['POST'])
+def uploadFotoPerfil():
+        # borrar contenido carpeta uploads
+    dir = 'uploads/'
+    for f in os.listdir(dir):
+        os.remove(os.path.join(dir, f))
+        time.sleep(2)
+        
+        # verificar sesion
+    try:
+        user = session["user"]
+        auth = session["auth"]
+    except:
+        user = "unknown"
+        auth = 0
+    if user == "unknown":
+        return redirect(url_for('inicio'))
+    
+    
+    if request.method == "POST":
+        f = request.files['file']
+        # descripcion = request.form['descripcion']
+        f.save(os.path.join(UPLOAD_FOLDER, secure_filename(f.filename)))
+        upload_file_foto_perfil(f"{f.filename}", BUCKET, user)
+        # os.remove(f.filename)
+        return redirect("/Templates/pantallaPerfilUsuario.html")
     
 @app.route("/pics")
 def list():
