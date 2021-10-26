@@ -39,8 +39,8 @@ def sql_consultar_datos_usuario(bd, nombreDeUsuario):
     registros_existentes = cursorObj.fetchall()
     return registros_existentes
        
-def editar_datos(bd, nombre, apellido, email, nombre_de_usuario):
-    strsql = "update persona set nombre='{0}', apellido='{1}', email='{2}' where nombreDeUsuario='{3}';".format(nombre,apellido,email,nombre_de_usuario)
+def editar_datos(bd, nombre, apellido, email, nombre_de_usuario, biografia):
+    strsql = "update persona set nombre='{0}', apellido='{1}', email='{2}', biografia='{4}' where nombreDeUsuario='{3}';".format(nombre,apellido,email,nombre_de_usuario, biografia)
     con = sql_connection(bd)
     cursor_obj = con.cursor()
     cursor_obj.execute(strsql)
@@ -76,6 +76,20 @@ def crear_nueva_publicacion(bd, usuario, timestamp, ULR_imagen, descripcion):
     #actualizar base de datos
     con.commit()
     con.close()
+ 
+def cargar_foto_usuario(bd, ID_usuario, URL_imagen):
+        #crear prepared statement
+    strsql = "UPDATE persona SET URL_fotoDePerfil='{0}' WHERE ID_usuario='{1}'".format(URL_imagen,ID_usuario)
+    #conexion
+    con = sql_connection(bd)
+    #variable para ejecutar queries
+    cursor_obj = con.cursor()
+    #ejecutar query
+    cursor_obj.execute(strsql)
+    #actualizar base de datos
+    con.commit()
+    con.close()   
+
 
 def obtener_id_usuario(bd, usuario):
     strsql = "select ID_usuario from persona where nombreDeUsuario='{0}';".format(usuario)
@@ -147,3 +161,11 @@ def busqueda_de_usuarios(busqueda):
     return registros_existentes
 
 # print(busqueda_de_usuarios('cam'))
+
+def buscar_foto_perfil(user):
+    strsql = "select URL_fotoDePerfil from persona where nombreDeUsuario='{0}';".format(user)
+    con = sql_connection('click10.db')
+    cursorObj = con.cursor()
+    cursorObj.execute(strsql)
+    registros_existentes = cursorObj.fetchall()
+    return registros_existentes[0][0]

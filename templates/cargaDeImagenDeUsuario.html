@@ -23,11 +23,11 @@
     </div>
 
     <div>
-      <h3>Sube tu imagen</h3>
-      <form method="POST" action="/upload" enctype="multipart/form-data" id="formulario">
-        <label for="descripcion">Descripción:</label><br>
+      <h3>Sube tu  de perfil</h3>
+      <form method="POST" action="/uploadFotoPerfil" enctype="multipart/form-data" id="formulario">
+        <!-- <label for="descripcion">Descripción:</label><br> -->
         <textarea name="descripcion" id="descripcion" cols="80" rows="5"
-          placeholder="Ecribe aquí una descripción de tu imagen"></textarea><br>
+          placeholder="Ecribe aquí una descripción de tu imagen" hidden>""</textarea><br>
         <section id="botonesDeCarga">
           <input type="file" id="media" name="file">
           <input type="submit" value="Upload">
