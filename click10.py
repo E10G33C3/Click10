@@ -296,11 +296,18 @@ def pantallaMensajes():
     if request.method=='POST':
         # Handle POST Request here
         busqueda = request.form['q']
-        resultados = busqueda_de_usuarios(busqueda)
-        print(resultados)
+        resultados_parciales = busqueda_de_usuarios(busqueda)
+        # print(resultados)
+        resultados=[]
+        for item in resultados_parciales:
+            resultados.append([item[0], item[1]])
+        for item in resultados:
+            item[1] = show_image_perfil(BUCKET, buscar_foto_perfil(item[0]))
+        
+        
         
         return render_template("pantallaMensajes.html", resultados=resultados, user=user, foto_man_o_nena=foto_man_o_nena)
-    return render_template("pantallaMensajes.html", foto_man_o_nena=foto_man_o_nena)
+    return render_template("pantallaMensajes.html", foto_man_o_nena=foto_man_o_nena, user=user)
 
 @app.route('/Templates/pantallaPerfilUsuario.html',methods=['GET','POST'])
 @app.route('/Templates/pantallaPerfilUsuario.html/<user>',methods=['GET','POST'])

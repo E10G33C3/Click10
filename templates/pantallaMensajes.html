@@ -640,7 +640,7 @@ Copiar esto
                 <button onclick="updateUser(item[0], item[1])">
                     <div class="usuario">
                         <div class="avatar">
-                            <img src="{{ url_for('static', filename='img/picMan.jpg') }}" alt="img">
+                            <img src={{ item[1] }} alt="img">
                             <span class="estado-usuario enlinea"></span>
                         </div>
                         <div class="cuerpo">
@@ -727,7 +727,7 @@ Copiar esto
                     <img src={{ foto_man_o_nena }} alt="img">
                 </div>
                 <div class="cuerpo">
-                    <span>Nombre de usuario</span>
+                    <span>@{{ user }}</span>
                     <span>Activo - Escribiendo...</span>
                 </div>
                 <div class="opciones">
