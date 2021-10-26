@@ -94,7 +94,11 @@ def editar():
     consulta = sql_consultar_datos_usuario('click10.db', user)
     print(consulta)
     p = Persona(consulta[0][1], consulta[0][2], consulta[0][6], consulta[0][8], consulta[0][9], consulta[0][3], consulta[0][4], consulta[0][5], consulta[0][7], consulta[0][10])
-    
+
+    # url foto de perfil
+    foto_man_o_nena = show_image_perfil(BUCKET, buscar_foto_perfil(user))
+
+
     if request.method=='POST':
         # Handle POST Request here
         pP = Persona(request.form['nombre'], request.form['apellido'], request.form['nombreDeUsuario'], request.form['email'], 'contrasena', False, False,False, "URL",request.form['biografia'] )
@@ -102,9 +106,9 @@ def editar():
             editar_datos('click10.db', pP.nombre, pP.apellido, pP.email, pP.nombre_de_usuario, pP.biografia)
             return render_template("pantallaPerfilUsuario.html")
         except IntegrityError:
-            return render_template("pantalla1GestionPerfil.html")
+            return render_template("pantalla1GestionPerfil.html", foto_man_o_nena=foto_man_o_nena)
         
-    return render_template("pantalla1GestionPerfil.html", user=user, nombre=p.nombre, apellido=p.apellido, email=p.email, biografia=p.biografia )
+    return render_template("pantalla1GestionPerfil.html", user=user, nombre=p.nombre, apellido=p.apellido, email=p.email, biografia=p.biografia , foto_man_o_nena=foto_man_o_nena )
 
 @app.route('/Templates/pantalla2GestionPerfil.html',methods=['GET','POST'])
 def cambiarContrasena():
@@ -118,6 +122,10 @@ def cambiarContrasena():
     if user == "unknown":
         return redirect(url_for('inicio'))
     
+    # url foto de perfil
+    foto_man_o_nena = show_image_perfil(BUCKET, buscar_foto_perfil(user))
+    
+    
     if request.method=='POST':
         # Handle POST Request here
         p = Persona('nombre', 'apellido', request.form['nombreDeUsuario'], 'email', request.form['contrasena'], False, False,False, "URL", "text")
@@ -128,8 +136,8 @@ def cambiarContrasena():
             return render_template("pantallaPerfilUsuario.html")
         except IntegrityError:
 
-            return render_template("pantalla2GestionPerfil.html")
-    return render_template("pantalla2GestionPerfil.html", user=user)
+            return render_template("pantalla2GestionPerfil.html", foto_man_o_nena=foto_man_o_nena)
+    return render_template("pantalla2GestionPerfil.html", user=user, foto_man_o_nena=foto_man_o_nena)
 
 @app.route('/Templates/pantalla3GestionPerfil.html',methods=['GET','POST'])
 def eliminar():
@@ -144,6 +152,9 @@ def eliminar():
     if user == "unknown":
         return redirect(url_for('inicio'))
     
+    # url foto de perfil
+    foto_man_o_nena = show_image_perfil(BUCKET, buscar_foto_perfil(user))
+    
     
     if request.method=='POST':
         # Handle POST Request here
@@ -154,8 +165,8 @@ def eliminar():
             return render_template("pantallaPerfilUsuario.html")
         except IntegrityError:
 
-            return render_template("pantalla3GestionPerfil.html")
-    return render_template("pantalla3GestionPerfil.html", user=user)
+            return render_template("pantalla3GestionPerfil.html", foto_man_o_nena=foto_man_o_nena)
+    return render_template("pantalla3GestionPerfil.html", user=user, foto_man_o_nena=foto_man_o_nena)
 
 
 # -------RUTAS DASHBOARD ADMIN---------------
@@ -278,6 +289,9 @@ def pantallaMensajes():
         auth = 0
     if user == "unknown":
         return redirect(url_for('inicio'))
+    
+    # url foto de perfil
+    foto_man_o_nena = show_image_perfil(BUCKET, buscar_foto_perfil(user))
             
     if request.method=='POST':
         # Handle POST Request here
@@ -285,8 +299,8 @@ def pantallaMensajes():
         resultados = busqueda_de_usuarios(busqueda)
         print(resultados)
         
-        return render_template("pantallaMensajes.html", resultados=resultados, user=user)
-    return render_template("pantallaMensajes.html")
+        return render_template("pantallaMensajes.html", resultados=resultados, user=user, foto_man_o_nena=foto_man_o_nena)
+    return render_template("pantallaMensajes.html", foto_man_o_nena=foto_man_o_nena)
 
 @app.route('/Templates/pantallaPerfilUsuario.html',methods=['GET','POST'])
 @app.route('/Templates/pantallaPerfilUsuario.html/<user>',methods=['GET','POST'])
@@ -309,9 +323,13 @@ def pantallaPerfilUsuario(user = None):
     
     consulta = sql_consultar_datos_usuario('click10.db', user)
     # print(consulta)
+    
+    # url foto de perfil
+    foto_man_o_nena = show_image_perfil(BUCKET, buscar_foto_perfil(user))
+    
     p = Persona(consulta[0][1], consulta[0][2], consulta[0][6], consulta[0][8], consulta[0][9], consulta[0][3], consulta[0][4], consulta[0][5], consulta[0][7], consulta[0][10])
     
-    return render_template("pantallaPerfilUsuario.html", user = user, biografia=p.biografia)
+    return render_template("pantallaPerfilUsuario.html", user = user, biografia=p.biografia, foto_man_o_nena=foto_man_o_nena)
 
 @app.route('/Templates/pantallaVistaPublicacion.html',methods=['GET','POST'])
 def pantallaVistaPublicacion():
